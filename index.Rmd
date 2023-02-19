@@ -1,0 +1,158 @@
+---
+title: "Explaining interation"
+author: "Ehsan Karim, ehsan.karim@ubc.ca, https://ehsank.com/"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+always_allow_html: yes
+output:
+  html_document:
+    fig_caption: yes
+    keep_md: yes
+    toc: yes
+    number_sections: true
+    toc_depth: 2
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+    theme: lumen
+    highlight: textmate
+  pdf_document:
+    fig_caption: yes
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+  slidy_presentation:
+    toc: yes  
+tags:
+- interaction
+- R
+- epidemiology
+header-includes: 
+- \usepackage[utf8]{inputenc}
+- \usepackage{doi}
+- \usepackage{url}
+- \usepackage{hyperref} 
+- \usepackage{apacite} 
+- \usepackage[usedoi]{rsc} % Loads natbib
+- \setcitestyle{sort&compress,numbers,super,square}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(SASxport)
+require(DiagrammeR)
+require(DiagrammeRsvg)
+require(rsvg)
+library(magrittr)
+library(svglite)
+library(png)
+require(nhanesA)
+require(survey)
+require(Publish)
+require(knitr)
+require(jtools)
+require(interactions)
+require(interactionR)
+cache.ON = TRUE
+```
+
+# DAG
+
+```{r dag, echo=FALSE, fig.cap="An illustration of possible interaction by  while investigating the impact of two dichotomous factors: $A$ and $B$ on the dichotomous outcome $Y$.\\label{fig:dag}", out.width = '100%'}
+knitr::include_graphics("images/dag.png")
+```
+
+# Interaction definitions
+
+| Groups and Conditions 	| Risk 	| Risk Difference 	| Risk Ratio | Odds Ratio |
+|---	|---	|---	|---	| ---	|
+| Baseline (exposed to none) 	| $R_{A = 0, B = 0} =  P[Y^{a=0, b=0} | L]$ 	| Reference	|  Reference	| Reference | 
+| Exposed to $A$ only 	| $R_{A = 1, B = 0} =  P[Y^{a=1, b=0} | L]$ 	| $RD_{A = 1} = R_{A = 1, B = 0} - R_{A = 0, B = 0}$	| $RR_{A = 1} = R_{A = 1, B = 0} / R_{A = 0, B = 0}$	| $OR_{A = 1} = [R_{A = 1, B = 0} / (1-R_{A = 1, B = 0})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| Exposed to $B$ only 	| $R_{A = 0, B = 1} =  P[Y^{a=0, b=1} | L]$ 	| $RD_{B = 1} = R_{A = 0, B = 1} - R_{A = 0, B = 0}$	| $RR_{B = 1} = R_{A = 0, B = 1} / R_{A = 0, B = 0}$	| $OR_{B = 1} = [R_{A = 0, B = 1} / (1-R_{A = 0, B = 1})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| Exposed to both $A$ and $B$ 	| $R_{A = 1, B = 1} =  P[Y^{a=1, b=1} | L]$ 	| $RD_{A = 1, B = 1} = R_{A = 1, B = 1} - R_{A = 0, B = 0}$	| $RR_{A = 1, B = 1} = R_{A = 1, B = 1} / R_{A = 0, B = 0}$	| $OR_{A = 1, B = 1} = [R_{A = 1, B = 1} / (1-R_{A = 1, B = 1})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| **Condition for interaction** 	 	||  $RD_{A = 1, B = 1} \ne RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} \ne RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} \ne OR_{A = 1} \times OR_{B = 1}$	|
+| **Synergism** 	 	||  $RD_{A = 1, B = 1} > RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} > RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} > OR_{A = 1} \times OR_{B = 1}$	|
+| **Antagonism** 	 	||  $RD_{A = 1, B = 1} < RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} < RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} < OR_{A = 1} \times OR_{B = 1}$	|
+Table: \label{tab:def} Summary of interaction definition by different effect measures.
+
+# Example data
+
+```{r}
+require(interactionR)
+data(OCdata)
+dim(OCdata)
+tail(OCdata)
+```
+
+## Base: no alcohol, no smoking for OR(smk1 on outcome [alc1==0] and OR(alc1 on outcome [smk1==0]
+
+```{r}
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "0")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "0")
+fit.w.int11 <- glm(oc ~ alc + smk + alc:smk, family = binomial(link = 'logit'), data = Obs.Data)
+require(jtools)
+results.int.model11 <- summ(fit.w.int11, model.info = FALSE, model.fit = FALSE, exp = TRUE)
+results.int.model11
+```
+
+## Base: alcohol drinker, no smoking for OR(smk1 on outcome [alc1==1]
+
+```{r}
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "0")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "1")
+fit.w.int01 <- glm(oc ~ alc + smk + alc:smk, family = binomial(link = 'logit'), data = Obs.Data)
+results.int.model01 <- summ(fit.w.int01, model.info = FALSE, model.fit = FALSE, exp = TRUE)
+results.int.model01
+```
+
+## Base: Smoker, no alcohol for OR(alc1 on outcome [smk1==1]
+
+```{r}
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "1")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "0")
+fit.w.int10 <- glm(oc ~ alc + smk + alc:smk, family = binomial(link = 'logit'), data = Obs.Data)
+results.int.model10 <- summ(fit.w.int10, model.info = FALSE, model.fit = FALSE, exp = TRUE)
+results.int.model10
+```
+
+## Estimates of different ORs
+
+```{r}
+# OR00 = 1
+OR10 <- exp(sum(summary(fit.w.int11)$coef[c('alc1'),'Estimate']))
+OR10 # OR_A=1
+OR01 <- exp(sum(summary(fit.w.int11)$coef[c('smk1'),'Estimate']))
+OR01 # OR_B=1
+OR11 <- exp(sum(summary(fit.w.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])) 
+OR11 # # OR_A=1,B=1
+OR10 * OR01
+Multiplicative.scale <- exp(sum(summary(fit.w.int11)$coef[c('alc1:smk1'),'Estimate'])) 
+Multiplicative.scale
+RERI <- OR11 - OR10 - OR01 + 1
+RERI
+AP <- RERI / OR11
+AP
+SI <- (OR11 - 1)/ (OR10 - 1 + OR01 - 1)
+SI
+```
+
+## Reporting guideline
+
+```{r}
+int.object <- interactionR(fit.w.int11, 
+                            exposure_names = c("alc1", "smk1"), 
+                            ci.type = "mover", ci.level = 0.95, 
+                            em=FALSE, recode = FALSE)
+kable(int.object$dframe[,1:4], digits = 2)
+```
