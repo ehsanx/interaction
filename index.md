@@ -41,25 +41,7 @@ header-includes:
 
 
 
-# DAG
 
-<div class="figure">
-<img src="images/dag.png" alt="An illustration of possible interaction by  while investigating the impact of two dichotomous factors: $A$ and $B$ on the dichotomous outcome $Y$.\label{fig:dag}" width="100%" />
-<p class="caption">An illustration of possible interaction by  while investigating the impact of two dichotomous factors: $A$ and $B$ on the dichotomous outcome $Y$.\label{fig:dag}</p>
-</div>
-
-# Interaction definitions
-
-| Groups and Conditions 	| Risk 	| Risk Difference 	| Risk Ratio | Odds Ratio |
-|---	|---	|---	|---	| ---	|
-| Baseline (exposed to none) 	| $R_{A = 0, B = 0} =  P[Y^{a=0, b=0} | L]$ 	| Reference	|  Reference	| Reference | 
-| Exposed to $A$ only 	| $R_{A = 1, B = 0} =  P[Y^{a=1, b=0} | L]$ 	| $RD_{A = 1} = R_{A = 1, B = 0} - R_{A = 0, B = 0}$	| $RR_{A = 1} = R_{A = 1, B = 0} / R_{A = 0, B = 0}$	| $OR_{A = 1} = [R_{A = 1, B = 0} / (1-R_{A = 1, B = 0})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
-| Exposed to $B$ only 	| $R_{A = 0, B = 1} =  P[Y^{a=0, b=1} | L]$ 	| $RD_{B = 1} = R_{A = 0, B = 1} - R_{A = 0, B = 0}$	| $RR_{B = 1} = R_{A = 0, B = 1} / R_{A = 0, B = 0}$	| $OR_{B = 1} = [R_{A = 0, B = 1} / (1-R_{A = 0, B = 1})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
-| Exposed to both $A$ and $B$ 	| $R_{A = 1, B = 1} =  P[Y^{a=1, b=1} | L]$ 	| $RD_{A = 1, B = 1} = R_{A = 1, B = 1} - R_{A = 0, B = 0}$	| $RR_{A = 1, B = 1} = R_{A = 1, B = 1} / R_{A = 0, B = 0}$	| $OR_{A = 1, B = 1} = [R_{A = 1, B = 1} / (1-R_{A = 1, B = 1})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
-| **Condition for interaction** 	 	||  $RD_{A = 1, B = 1} \ne RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} \ne RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} \ne OR_{A = 1} \times OR_{B = 1}$	|
-| **Synergism** 	 	||  $RD_{A = 1, B = 1} > RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} > RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} > OR_{A = 1} \times OR_{B = 1}$	|
-| **Antagonism** 	 	||  $RD_{A = 1, B = 1} < RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} < RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} < OR_{A = 1} \times OR_{B = 1}$	|
-Table: \label{tab:def} Summary of interaction definition by different effect measures.
 
 # Example data
 
@@ -87,6 +69,18 @@ tail(OCdata)
 ## 457  0   0   0
 ## 458  0   0   0
 ```
+
+# DAG
+
+<div class="figure">
+<img src="images/dag.png" alt="An illustration of possible interaction by  while investigating the impact of two dichotomous factors: $A$ and $B$ on the dichotomous outcome $Y$.\label{fig:dag}" width="100%" />
+<p class="caption">An illustration of possible interaction by  while investigating the impact of two dichotomous factors: $A$ and $B$ on the dichotomous outcome $Y$.\label{fig:dag}</p>
+</div>
+
+
+# Modelling interaction (OR)
+
+Pr[Y=1] = $\alpha_0$ + $\alpha_A$ A + $\alpha_B$ B + $\alpha_{AB}$ (A $\times$ B)
 
 ## Base: no alcohol, no smoking for OR(smk1 on outcome [alc1==0] and OR(alc1 on outcome [smk1==0]
 
@@ -156,6 +150,117 @@ results.int.model11
 <tfoot><tr><td style="padding: 0; " colspan="100%">
 <sup></sup> Standard errors: MLE</td></tr></tfoot>
 </table>
+
+## Estimates of different ORs
+
+### Base 
+
+- $\alpha_0$ = -1.9
+- $\exp(\alpha_0)$ = 0.15
+
+### Alcohol
+
+
+```r
+# OR00 = 1
+OR10 <- exp(sum(summary(fit.w.int11)$coef[c('alc1'),'Estimate']))
+OR10 # OR_A=1
+```
+
+```
+## [1] 3.333333
+```
+
+- $\alpha_A$ = 1.2
+- OR_{A=1} = OR10 = $\exp(\alpha_A)$ = 3.33
+
+### Smoking
+
+
+```r
+OR01 <- exp(sum(summary(fit.w.int11)$coef[c('smk1'),'Estimate']))
+OR01 # OR_B=1
+```
+
+```
+## [1] 2.962963
+```
+
+- $\alpha_B$ = 1.09
+- OR_{B=1} = OR01 = $\exp(\alpha_B)$ = 2.96
+
+### Both alcohol and smoking
+
+
+```r
+OR11 <- exp(sum(summary(fit.w.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])) 
+OR11 # # OR_A=1,B=1
+```
+
+```
+## [1] 9.036145
+```
+
+- $\alpha_{AB}$ = -0.09
+- OR_{A=1,B=1} = OR11 = 9.04
+
+### Joint effect?
+
+Is OR11 $\ne$ OR10 * OR01
+
+
+```r
+OR10 * OR01
+```
+
+```
+## [1] 9.876543
+```
+
+### Multiplicative scale
+
+
+```r
+Multiplicative.scale <- exp(sum(summary(fit.w.int11)$coef[c('alc1:smk1'),'Estimate'])) 
+Multiplicative.scale
+```
+
+```
+## [1] 0.9149096
+```
+
+- Multiplicative.scale = $\exp(\alpha_{AB})$ = 0.91
+
+### Additive scales
+
+
+```r
+RERI <- OR11 - OR10 - OR01 + 1
+RERI
+```
+
+```
+## [1] 3.739848
+```
+
+```r
+AP <- RERI / OR11
+AP
+```
+
+```
+## [1] 0.4138765
+```
+
+```r
+SI <- (OR11 - 1)/ (OR10 - 1 + OR01 - 1)
+SI
+```
+
+```
+## [1] 1.870482
+```
+
 
 ## Base: alcohol drinker, no smoking for OR(smk1 on outcome [alc1==1]
 
@@ -283,80 +388,7 @@ results.int.model10
 <sup></sup> Standard errors: MLE</td></tr></tfoot>
 </table>
 
-## Estimates of different ORs
 
-
-```r
-# OR00 = 1
-OR10 <- exp(sum(summary(fit.w.int11)$coef[c('alc1'),'Estimate']))
-OR10 # OR_A=1
-```
-
-```
-## [1] 3.333333
-```
-
-```r
-OR01 <- exp(sum(summary(fit.w.int11)$coef[c('smk1'),'Estimate']))
-OR01 # OR_B=1
-```
-
-```
-## [1] 2.962963
-```
-
-```r
-OR11 <- exp(sum(summary(fit.w.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])) 
-OR11 # # OR_A=1,B=1
-```
-
-```
-## [1] 9.036145
-```
-
-```r
-OR10 * OR01
-```
-
-```
-## [1] 9.876543
-```
-
-```r
-Multiplicative.scale <- exp(sum(summary(fit.w.int11)$coef[c('alc1:smk1'),'Estimate'])) 
-Multiplicative.scale
-```
-
-```
-## [1] 0.9149096
-```
-
-```r
-RERI <- OR11 - OR10 - OR01 + 1
-RERI
-```
-
-```
-## [1] 3.739848
-```
-
-```r
-AP <- RERI / OR11
-AP
-```
-
-```
-## [1] 0.4138765
-```
-
-```r
-SI <- (OR11 - 1)/ (OR10 - 1 + OR01 - 1)
-SI
-```
-
-```
-## [1] 1.870482
-```
 
 ## Reporting guideline
 
@@ -385,3 +417,215 @@ kable(int.object$dframe[,1:4], digits = 2)
 |RERI                         |      3.74| -11.43| 21.87|
 |AP                           |      0.41|  -0.38|  0.81|
 |SI                           |      1.87|   0.65|  5.42|
+
+
+# Modelling interaction (RR)
+
+
+
+```r
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "0")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "0")
+fit.rr.int11 <- glm(oc ~ alc + smk + alc:smk, family = poisson(link = 'log'), data = Obs.Data)
+results.rr.model11 <- summ(fit.rr.int11, model.info = FALSE, model.fit = FALSE, exp = TRUE)
+results.rr.model11
+```
+
+  <table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> exp(Est.) </th>
+   <th style="text-align:right;"> 2.5% </th>
+   <th style="text-align:right;"> 97.5% </th>
+   <th style="text-align:right;"> z val. </th>
+   <th style="text-align:right;"> p </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.13 </td>
+   <td style="text-align:right;"> 0.04 </td>
+   <td style="text-align:right;"> 0.40 </td>
+   <td style="text-align:right;"> -3.53 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> alc1 </td>
+   <td style="text-align:right;"> 2.56 </td>
+   <td style="text-align:right;"> 0.64 </td>
+   <td style="text-align:right;"> 10.22 </td>
+   <td style="text-align:right;"> 1.33 </td>
+   <td style="text-align:right;"> 0.18 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> smk1 </td>
+   <td style="text-align:right;"> 2.36 </td>
+   <td style="text-align:right;"> 0.63 </td>
+   <td style="text-align:right;"> 8.89 </td>
+   <td style="text-align:right;"> 1.27 </td>
+   <td style="text-align:right;"> 0.20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;font-weight: bold;"> alc1:smk1 </td>
+   <td style="text-align:right;"> 0.73 </td>
+   <td style="text-align:right;"> 0.15 </td>
+   <td style="text-align:right;"> 3.46 </td>
+   <td style="text-align:right;"> -0.39 </td>
+   <td style="text-align:right;"> 0.69 </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup></sup> Standard errors: MLE</td></tr></tfoot>
+</table>
+
+
+```r
+int.object <- interactionR(fit.rr.int11, 
+                            exposure_names = c("alc1", "smk1"), 
+                            ci.type = "mover", ci.level = 0.95, 
+                            em=FALSE, recode = FALSE)
+kable(int.object$dframe[,1:4], digits = 2)
+```
+
+
+
+|Measures                     | Estimates| CI.ll| CI.ul|
+|:----------------------------|---------:|-----:|-----:|
+|OR00                         |      1.00|    NA|    NA|
+|OR01                         |      2.36|  0.63|  8.89|
+|OR10                         |      2.56|  0.64| 10.22|
+|OR11                         |      4.41|  1.41| 13.78|
+|OR(smk1 on outcome [alc1==0] |      2.36|  0.63|  8.89|
+|OR(smk1 on outcome [alc1==1] |      1.73|  0.77|  3.88|
+|OR(alc1 on outcome [smk1==0] |      2.56|  0.64| 10.22|
+|OR(alc1 on outcome [smk1==1] |      1.87|  0.92|  3.79|
+|Multiplicative scale         |      0.73|  0.15|  3.46|
+|RERI                         |      0.50| -9.97|  7.01|
+|AP                           |      0.11| -0.82|  0.75|
+|SI                           |      1.17|  0.42|  3.23|
+
+
+## Estimates of different RRs
+
+### Alcohol
+
+
+```r
+# OR00 = 1
+OR10 <- exp(sum(summary(fit.rr.int11)$coef[c('alc1'),'Estimate']))
+OR10 # OR_A=1
+```
+
+```
+## [1] 2.555555
+```
+
+- $\alpha_A$ = 0.94
+- OR_{A=1} = OR10 = $\exp(\alpha_A)$ = 2.56
+
+### Smoking
+
+
+```r
+OR01 <- exp(sum(summary(fit.rr.int11)$coef[c('smk1'),'Estimate']))
+OR01 # OR_B=1
+```
+
+```
+## [1] 2.358974
+```
+
+- $\alpha_B$ = 0.86
+- OR_{B=1} = OR01 = $\exp(\alpha_B)$ = 2.36
+
+### Both alcohol and smoking
+
+
+```r
+OR11 <- exp(sum(summary(fit.rr.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])) 
+OR11 # # OR_A=1,B=1
+```
+
+```
+## [1] 4.411764
+```
+
+- $\alpha_{AB}$ = -0.31
+- OR_{A=1,B=1} = OR11 = 4.41
+
+### Joint effect?
+
+Is OR11 $\ne$ OR10 * OR01
+
+
+```r
+OR10 * OR01
+```
+
+```
+## [1] 6.028489
+```
+
+### Multiplicative scale
+
+
+```r
+Multiplicative.scale <- exp(sum(summary(fit.rr.int11)$coef[c('alc1:smk1'),'Estimate'])) 
+Multiplicative.scale
+```
+
+```
+## [1] 0.7318192
+```
+
+- Multiplicative.scale = $\exp(\alpha_{AB})$ = 0.73
+
+### Additive scales
+
+
+```r
+RERI <- OR11 - OR10 - OR01 + 1
+RERI
+```
+
+```
+## [1] 0.4972348
+```
+
+```r
+AP <- RERI / OR11
+AP
+```
+
+```
+## [1] 0.1127066
+```
+
+```r
+SI <- (OR11 - 1)/ (OR10 - 1 + OR01 - 1)
+SI
+```
+
+```
+## [1] 1.170606
+```
+
+
+
+# Interaction definitions
+
+| Groups and Conditions 	| Risk 	| Risk Difference 	| Risk Ratio | Odds Ratio |
+|---	|---	|---	|---	| ---	|
+| Baseline (exposed to none) 	| $R_{A = 0, B = 0} =  P[Y^{a=0, b=0} | L]$ 	| Reference	|  Reference	| Reference | 
+| Exposed to $A$ only 	| $R_{A = 1, B = 0} =  P[Y^{a=1, b=0} | L]$ 	| $RD_{A = 1} = R_{A = 1, B = 0} - R_{A = 0, B = 0}$	| $RR_{A = 1} = R_{A = 1, B = 0} / R_{A = 0, B = 0}$	| $OR_{A = 1} = [R_{A = 1, B = 0} / (1-R_{A = 1, B = 0})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| Exposed to $B$ only 	| $R_{A = 0, B = 1} =  P[Y^{a=0, b=1} | L]$ 	| $RD_{B = 1} = R_{A = 0, B = 1} - R_{A = 0, B = 0}$	| $RR_{B = 1} = R_{A = 0, B = 1} / R_{A = 0, B = 0}$	| $OR_{B = 1} = [R_{A = 0, B = 1} / (1-R_{A = 0, B = 1})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| Exposed to both $A$ and $B$ 	| $R_{A = 1, B = 1} =  P[Y^{a=1, b=1} | L]$ 	| $RD_{A = 1, B = 1} = R_{A = 1, B = 1} - R_{A = 0, B = 0}$	| $RR_{A = 1, B = 1} = R_{A = 1, B = 1} / R_{A = 0, B = 0}$	| $OR_{A = 1, B = 1} = [R_{A = 1, B = 1} / (1-R_{A = 1, B = 1})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| **Condition for interaction** 	 	||  $RD_{A = 1, B = 1} \ne RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} \ne RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} \ne OR_{A = 1} \times OR_{B = 1}$	|
+| **Synergism** 	 	||  $RD_{A = 1, B = 1} > RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} > RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} > OR_{A = 1} \times OR_{B = 1}$	|
+| **Antagonism** 	 	||  $RD_{A = 1, B = 1} < RD_{A = 1} + RD_{B = 1}$	| $RR_{A = 1, B = 1} < RR_{A = 1} \times RR_{B = 1}$ 	| $OR_{A = 1, B = 1} < OR_{A = 1} \times OR_{B = 1}$	|
+Table: \label{tab:def} Summary of interaction definition by different effect measures.
