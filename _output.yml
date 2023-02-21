@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Interation in epidemiology</a></li>
+        <li><a href="./">Interaction in epidemiology</a></li>
       after: |
         <li><a href="https://ehsank.com/" target="blank">Contact</a></li>
     edit: https://github.com/ehsanx/interaction/edit/BRANCH/%s

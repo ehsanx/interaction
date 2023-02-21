@@ -126,16 +126,44 @@ We can utilize the probability and log-odds calculated before to plot these line
 
 ```{r}
 par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
-plot(c(1,0),c(p1.s1,p0.s1), ylim = range(c(p1.s1,p1.s0, p0.s1,p0.s0)), xlim=c(0,1), xlab = "exposure", ylab = "Probability of outcome", lty = 1, col = "green", type = "l", main = "Probability scale")
-lines(c(1,0),c(p1.s0,p0.s0), lty = 2, col = "red")
-legend("bottomright", inset=c(-0.2,0), legend=c("strata 1","strata 0"), pch=c(1,3), title="effect modifier", col = c("green", "red"))
+plot(c(1,0),c(p1.s1,p0.s1), 
+     ylim = range(c(p1.s1,p1.s0, p0.s1,p0.s0)), 
+     xlim=c(0,1), 
+     xlab = "exposure", 
+     ylab = "Probability of outcome", 
+     lty = 1, 
+     col = "green", 
+     type = "l", 
+     main = "Probability scale")
+lines(c(1,0),c(p1.s0,p0.s0), 
+      lty = 2, 
+      col = "red")
+legend("bottomright", 
+       inset=c(-0.2,0), 
+       legend=c("strata 1","strata 0"), 
+       pch=c(1,3), 
+       title="effect modifier", 
+       col = c("green", "red"))
 ```
 
 ```{r}
 par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
-plot(c(1,0),c(log(OR.s1a), log(OR.s1b)), ylim = range(c(log(OR.s1a), log(OR.s0a),log(OR.s1b),log(OR.s0b))), xlim=c(0,1), xlab = "exposure", ylab = "log-odds of outcome", lty = 1, col = "green", type = "l", main = "Log-odds scale")
-lines(c(1,0),c(log(OR.s0a),log(OR.s0b)), lty = 2, col = "red")
-legend("bottomright", inset=c(-0.2,0), legend=c("strata 1","strata 0"), pch=c(1,3), title="effect modifier", col = c("green", "red"))
+plot(c(1,0),c(log(OR.s1a), log(OR.s1b)), 
+     ylim = range(c(log(OR.s1a), log(OR.s0a),log(OR.s1b),log(OR.s0b))), 
+     xlim=c(0,1), xlab = "exposure", 
+     ylab = "log-odds of outcome", 
+     lty = 1, 
+     col = "green", 
+     type = "l", 
+     main = "Log-odds scale")
+lines(c(1,0),c(log(OR.s0a),log(OR.s0b)), 
+      lty = 2, 
+      col = "red")
+legend("bottomright", inset=c(-0.2,0), 
+       legend=c("strata 1","strata 0"), 
+       pch=c(1,3), 
+       title="effect modifier", 
+       col = c("green", "red"))
 ```
 
 
@@ -170,7 +198,6 @@ Let us estimate the ORs by effect modifier
 ```{r}
 require(Publish)
 saveres <- publish(reg1)
-saveres
 ```
 
 We can also plot this to check the overlap of CIs visually
@@ -186,7 +213,7 @@ lines(c(1,1), saveres$rawTable[4,c("Lower","Upper")],
       col="blue", lty=2)
 ```
 
-
+<!---
 ### RD: additive scale
 
 ```{r}
@@ -237,7 +264,7 @@ reg.res5$coeftable
 ```
 
 
-<!---
+
 #### Prevalence estimation
 
 ```{r, warning=FALSE, message=FALSE}
@@ -269,7 +296,7 @@ reg1 = glm(oc~alc*smk,
            family = binomial(link = 'logit'), 
            data = OCdata)
 table_object = interactionR(reg1, 
-                            exposure_names = c("alc1", "smk1"), 
+                            exposure_names = c("smk1", "alc1"), 
                             ci.type = "mover", 
                             ci.level = 0.95, 
                             em=TRUE, 
@@ -278,13 +305,7 @@ table_object$dframe
 interactionR_table(table_object)
 ```
 
-Compare with previously obtained results
-
-```{r}
-saveres
-```
-
-Also calculate by hand
+Compare with previously obtained results, and also calculate by hand
 
 ```{r}
 beta1 <- as.numeric(reg1$coefficients[2])
@@ -314,4 +335,6 @@ SI
 --->
 
 
+### RR and RD
 
+Estimation approach is same as interaction (adding an interaction term in the corresponding regression), we are just interested in estimates from each level of the effect modifier (hence less estimates are needed compared to those estimated in interaction assessment).

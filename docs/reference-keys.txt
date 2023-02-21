@@ -53,6 +53,5 @@ does-effect-modification-exist
 are-the-lines-parallel
 estimates-from-regression
 or-multiplicative-scale
-rd-additive-scale
-rr-multiplicative-scale
 converted-estimates-from-or
+rr-and-rd

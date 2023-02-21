@@ -155,7 +155,7 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Interation in epidemiology</a></li>
+<li><a href="./">Interaction in epidemiology</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Definitions</a>
@@ -203,9 +203,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.2" data-path="effect-modification-1.html"><a href="effect-modification-1.html#estimates-from-regression"><i class="fa fa-check"></i><b>3.2</b> Estimates from Regression</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="effect-modification-1.html"><a href="effect-modification-1.html#or-multiplicative-scale"><i class="fa fa-check"></i><b>3.2.1</b> OR: multiplicative scale</a></li>
-<li class="chapter" data-level="3.2.2" data-path="effect-modification-1.html"><a href="effect-modification-1.html#rd-additive-scale"><i class="fa fa-check"></i><b>3.2.2</b> RD: additive scale</a></li>
-<li class="chapter" data-level="3.2.3" data-path="effect-modification-1.html"><a href="effect-modification-1.html#rr-multiplicative-scale"><i class="fa fa-check"></i><b>3.2.3</b> RR: multiplicative scale</a></li>
-<li class="chapter" data-level="3.2.4" data-path="effect-modification-1.html"><a href="effect-modification-1.html#converted-estimates-from-or"><i class="fa fa-check"></i><b>3.2.4</b> Converted estimates from OR</a></li>
+<li class="chapter" data-level="3.2.2" data-path="effect-modification-1.html"><a href="effect-modification-1.html#converted-estimates-from-or"><i class="fa fa-check"></i><b>3.2.2</b> Converted estimates from OR</a></li>
+<li class="chapter" data-level="3.2.3" data-path="effect-modification-1.html"><a href="effect-modification-1.html#rr-and-rd"><i class="fa fa-check"></i><b>3.2.3</b> RR and RD</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i>Reference</a></li>
@@ -362,14 +361,42 @@ div.csl-indent {
 <h4><span class="header-section-number">3.1.3.1</span> Are the lines parallel?<a href="effect-modification-1.html#are-the-lines-parallel" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We can utilize the probability and log-odds calculated before to plot these lines:</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="effect-modification-1.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">5.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">8.1</span>), <span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
-<span id="cb103-2"><a href="effect-modification-1.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(p1.s1,p0.s1), <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(p1.s1,p1.s0, p0.s1,p0.s0)), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab =</span> <span class="st">&quot;exposure&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Probability of outcome&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Probability scale&quot;</span>)</span>
-<span id="cb103-3"><a href="effect-modification-1.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(p1.s0,p0.s0), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb103-4"><a href="effect-modification-1.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">inset=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>,<span class="dv">0</span>), <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;strata 1&quot;</span>,<span class="st">&quot;strata 0&quot;</span>), <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">title=</span><span class="st">&quot;effect modifier&quot;</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<span id="cb103-2"><a href="effect-modification-1.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(p1.s1,p0.s1), </span>
+<span id="cb103-3"><a href="effect-modification-1.html#cb103-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(p1.s1,p1.s0, p0.s1,p0.s0)), </span>
+<span id="cb103-4"><a href="effect-modification-1.html#cb103-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
+<span id="cb103-5"><a href="effect-modification-1.html#cb103-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;exposure&quot;</span>, </span>
+<span id="cb103-6"><a href="effect-modification-1.html#cb103-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Probability of outcome&quot;</span>, </span>
+<span id="cb103-7"><a href="effect-modification-1.html#cb103-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">lty =</span> <span class="dv">1</span>, </span>
+<span id="cb103-8"><a href="effect-modification-1.html#cb103-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, </span>
+<span id="cb103-9"><a href="effect-modification-1.html#cb103-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, </span>
+<span id="cb103-10"><a href="effect-modification-1.html#cb103-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Probability scale&quot;</span>)</span>
+<span id="cb103-11"><a href="effect-modification-1.html#cb103-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(p1.s0,p0.s0), </span>
+<span id="cb103-12"><a href="effect-modification-1.html#cb103-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">2</span>, </span>
+<span id="cb103-13"><a href="effect-modification-1.html#cb103-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb103-14"><a href="effect-modification-1.html#cb103-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, </span>
+<span id="cb103-15"><a href="effect-modification-1.html#cb103-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">inset=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>,<span class="dv">0</span>), </span>
+<span id="cb103-16"><a href="effect-modification-1.html#cb103-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;strata 1&quot;</span>,<span class="st">&quot;strata 0&quot;</span>), </span>
+<span id="cb103-17"><a href="effect-modification-1.html#cb103-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), </span>
+<span id="cb103-18"><a href="effect-modification-1.html#cb103-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;effect modifier&quot;</span>, </span>
+<span id="cb103-19"><a href="effect-modification-1.html#cb103-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="effect-modification-1.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">5.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">8.1</span>), <span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
-<span id="cb104-2"><a href="effect-modification-1.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(<span class="fu">log</span>(OR.s1a), <span class="fu">log</span>(OR.s1b)), <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(<span class="fu">log</span>(OR.s1a), <span class="fu">log</span>(OR.s0a),<span class="fu">log</span>(OR.s1b),<span class="fu">log</span>(OR.s0b))), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab =</span> <span class="st">&quot;exposure&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;log-odds of outcome&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Log-odds scale&quot;</span>)</span>
-<span id="cb104-3"><a href="effect-modification-1.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(<span class="fu">log</span>(OR.s0a),<span class="fu">log</span>(OR.s0b)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb104-4"><a href="effect-modification-1.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">inset=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>,<span class="dv">0</span>), <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;strata 1&quot;</span>,<span class="st">&quot;strata 0&quot;</span>), <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">title=</span><span class="st">&quot;effect modifier&quot;</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<span id="cb104-2"><a href="effect-modification-1.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(<span class="fu">log</span>(OR.s1a), <span class="fu">log</span>(OR.s1b)), </span>
+<span id="cb104-3"><a href="effect-modification-1.html#cb104-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(<span class="fu">log</span>(OR.s1a), <span class="fu">log</span>(OR.s0a),<span class="fu">log</span>(OR.s1b),<span class="fu">log</span>(OR.s0b))), </span>
+<span id="cb104-4"><a href="effect-modification-1.html#cb104-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab =</span> <span class="st">&quot;exposure&quot;</span>, </span>
+<span id="cb104-5"><a href="effect-modification-1.html#cb104-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;log-odds of outcome&quot;</span>, </span>
+<span id="cb104-6"><a href="effect-modification-1.html#cb104-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">lty =</span> <span class="dv">1</span>, </span>
+<span id="cb104-7"><a href="effect-modification-1.html#cb104-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, </span>
+<span id="cb104-8"><a href="effect-modification-1.html#cb104-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, </span>
+<span id="cb104-9"><a href="effect-modification-1.html#cb104-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Log-odds scale&quot;</span>)</span>
+<span id="cb104-10"><a href="effect-modification-1.html#cb104-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(<span class="fu">log</span>(OR.s0a),<span class="fu">log</span>(OR.s0b)), </span>
+<span id="cb104-11"><a href="effect-modification-1.html#cb104-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">2</span>, </span>
+<span id="cb104-12"><a href="effect-modification-1.html#cb104-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb104-13"><a href="effect-modification-1.html#cb104-13" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">inset=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>,<span class="dv">0</span>), </span>
+<span id="cb104-14"><a href="effect-modification-1.html#cb104-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;strata 1&quot;</span>,<span class="st">&quot;strata 0&quot;</span>), </span>
+<span id="cb104-15"><a href="effect-modification-1.html#cb104-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), </span>
+<span id="cb104-16"><a href="effect-modification-1.html#cb104-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;effect modifier&quot;</span>, </span>
+<span id="cb104-17"><a href="effect-modification-1.html#cb104-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 </div>
 </div>
@@ -409,80 +436,104 @@ div.csl-indent {
 ##  alc(1): smk(1 vs 0)            2.71  [1.00;7.37]   0.05070 
 ##  smk(0): alc(1 vs 0)            3.33 [0.70;15.86]   0.13031 
 ##  smk(1): alc(1 vs 0)            3.05  [1.29;7.18]   0.01073</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="effect-modification-1.html#cb109-1" aria-hidden="true" tabindex="-1"></a>saveres</span></code></pre></div>
-<pre><code>##              Variable Units OddsRatio        CI.95   p-value
-## 1 alc(0): smk(1 vs 0)            2.96 [0.68;12.91]   0.14805
-## 2 alc(1): smk(1 vs 0)            2.71  [1.00;7.37]   0.05070
-## 3 smk(0): alc(1 vs 0)            3.33 [0.70;15.86]   0.13031
-## 4 smk(1): alc(1 vs 0)            3.05  [1.29;7.18]   0.01073</code></pre>
 <p>We can also plot this to check the overlap of CIs visually</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="effect-modification-1.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="st">&quot;OddsRatio&quot;</span>], </span>
-<span id="cb111-2"><a href="effect-modification-1.html#cb111-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;effect modifier&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;OR&quot;</span>, </span>
-<span id="cb111-3"><a href="effect-modification-1.html#cb111-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;OR by effect modifier&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
-<span id="cb111-4"><a href="effect-modification-1.html#cb111-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">range</span>(saveres<span class="sc">$</span>rawTable[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]))</span>
-<span id="cb111-5"><a href="effect-modification-1.html#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">3</span>,<span class="fu">c</span>(<span class="st">&quot;Lower&quot;</span>,<span class="st">&quot;Upper&quot;</span>)], </span>
-<span id="cb111-6"><a href="effect-modification-1.html#cb111-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb111-7"><a href="effect-modification-1.html#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">4</span>,<span class="fu">c</span>(<span class="st">&quot;Lower&quot;</span>,<span class="st">&quot;Upper&quot;</span>)], </span>
-<span id="cb111-8"><a href="effect-modification-1.html#cb111-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="effect-modification-1.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="st">&quot;OddsRatio&quot;</span>], </span>
+<span id="cb109-2"><a href="effect-modification-1.html#cb109-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;effect modifier&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;OR&quot;</span>, </span>
+<span id="cb109-3"><a href="effect-modification-1.html#cb109-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;OR by effect modifier&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
+<span id="cb109-4"><a href="effect-modification-1.html#cb109-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">range</span>(saveres<span class="sc">$</span>rawTable[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]))</span>
+<span id="cb109-5"><a href="effect-modification-1.html#cb109-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">3</span>,<span class="fu">c</span>(<span class="st">&quot;Lower&quot;</span>,<span class="st">&quot;Upper&quot;</span>)], </span>
+<span id="cb109-6"><a href="effect-modification-1.html#cb109-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb109-7"><a href="effect-modification-1.html#cb109-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">4</span>,<span class="fu">c</span>(<span class="st">&quot;Lower&quot;</span>,<span class="st">&quot;Upper&quot;</span>)], </span>
+<span id="cb109-8"><a href="effect-modification-1.html#cb109-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
-</div>
-<div id="rd-additive-scale" class="section level3 hasAnchor" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> RD: additive scale<a href="effect-modification-1.html#rd-additive-scale" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="effect-modification-1.html#cb112-1" aria-hidden="true" tabindex="-1"></a>reg2 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
-<span id="cb112-2"><a href="effect-modification-1.html#cb112-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&#39;identity&#39;</span>), </span>
-<span id="cb112-3"><a href="effect-modification-1.html#cb112-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
-<span id="cb112-4"><a href="effect-modification-1.html#cb112-4" aria-hidden="true" tabindex="-1"></a>reg.res2 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg2, </span>
-<span id="cb112-5"><a href="effect-modification-1.html#cb112-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exp =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb112-6"><a href="effect-modification-1.html#cb112-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">confint =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb112-7"><a href="effect-modification-1.html#cb112-7" aria-hidden="true" tabindex="-1"></a>reg.res2<span class="sc">$</span>coeftable</span></code></pre></div>
-<pre><code>##                   Est.         2.5%     97.5%    z val.          p
+<!---
+### RD: additive scale
+
+
+```r
+reg2 = glm(oc~alc*smk, 
+           family = binomial(link = 'identity'), 
+           data = OCdata)
+reg.res2 <- summ(reg2, 
+                 exp = FALSE, 
+                 confint = TRUE)
+reg.res2$coeftable
+```
+
+```
+##                   Est.         2.5%     97.5%    z val.          p
 ## (Intercept) 0.13043478 -0.007201192 0.2680708 1.8574176 0.06325177
 ## alc1        0.20289855 -0.054723418 0.4605205 1.5436333 0.12267719
 ## smk1        0.17725753 -0.047279102 0.4017942 1.5472681 0.12179861
-## alc1:smk1   0.06485671 -0.251754034 0.3814675 0.4014924 0.68805761</code></pre>
-<p>Convergence is often an issue, and hence the following can be used instead. But for the following, robust standard error estimation is necessary. One disadvantage is that the estimated probabilities could be beyond 0 and 1.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="effect-modification-1.html#cb114-1" aria-hidden="true" tabindex="-1"></a>reg3 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
-<span id="cb114-2"><a href="effect-modification-1.html#cb114-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> gaussian, </span>
-<span id="cb114-3"><a href="effect-modification-1.html#cb114-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
-<span id="cb114-4"><a href="effect-modification-1.html#cb114-4" aria-hidden="true" tabindex="-1"></a>reg.res3 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg3, </span>
-<span id="cb114-5"><a href="effect-modification-1.html#cb114-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exp =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb114-6"><a href="effect-modification-1.html#cb114-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">robust =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb114-7"><a href="effect-modification-1.html#cb114-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">confint =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb114-8"><a href="effect-modification-1.html#cb114-8" aria-hidden="true" tabindex="-1"></a>reg.res3<span class="sc">$</span>coeftable</span></code></pre></div>
-<pre><code>##                   Est.        2.5%     97.5%   t val.         p
+## alc1:smk1   0.06485671 -0.251754034 0.3814675 0.4014924 0.68805761
+```
+
+Convergence is often an issue, and hence the following can be used instead. But for the following, robust standard error estimation is necessary. One disadvantage is that the estimated probabilities could be beyond 0 and 1.
+
+
+```r
+reg3 = glm(oc~alc*smk, 
+           family = gaussian, 
+           data = OCdata)
+reg.res3 <- summ(reg3, 
+                 exp = FALSE, 
+                 robust = TRUE, 
+                 confint = TRUE)
+reg.res3$coeftable
+```
+
+```
+##                   Est.        2.5%     97.5%   t val.         p
 ## (Intercept) 0.13043478 -0.06858971 0.3294593 1.284503 0.1989662
 ## alc1        0.20289855 -0.09747536 0.5032725 1.323929 0.1855265
 ## smk1        0.17725753 -0.09596588 0.4504809 1.271554 0.2035316
-## alc1:smk1   0.06485671 -0.29234745 0.4220609 0.355866 0.7219409</code></pre>
-</div>
-<div id="rr-multiplicative-scale" class="section level3 hasAnchor" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> RR: multiplicative scale<a href="effect-modification-1.html#rr-multiplicative-scale" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="effect-modification-1.html#cb116-1" aria-hidden="true" tabindex="-1"></a>reg4 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
-<span id="cb116-2"><a href="effect-modification-1.html#cb116-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&#39;log&#39;</span>), </span>
-<span id="cb116-3"><a href="effect-modification-1.html#cb116-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
-<span id="cb116-4"><a href="effect-modification-1.html#cb116-4" aria-hidden="true" tabindex="-1"></a>reg.res4 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg4, </span>
-<span id="cb116-5"><a href="effect-modification-1.html#cb116-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exp =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb116-6"><a href="effect-modification-1.html#cb116-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">robust =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb116-7"><a href="effect-modification-1.html#cb116-7" aria-hidden="true" tabindex="-1"></a>reg.res4<span class="sc">$</span>coeftable</span></code></pre></div>
-<pre><code>##             exp(Est.)       2.5%     97.5%     z val.            p
+## alc1:smk1   0.06485671 -0.29234745 0.4220609 0.355866 0.7219409
+```
+
+### RR: multiplicative scale
+
+
+```r
+reg4 = glm(oc~alc*smk, 
+           family = binomial(link = 'log'), 
+           data = OCdata)
+reg.res4 <- summ(reg4, 
+                 exp = TRUE, 
+                 robust = TRUE)
+reg.res4$coeftable
+```
+
+```
+##             exp(Est.)       2.5%     97.5%     z val.            p
 ## (Intercept) 0.1304348 0.04540698 0.3746832 -3.7833464 0.0001547338
 ## alc1        2.5555556 0.73873564 8.8405972  1.4817478 0.1384074033
 ## smk1        2.3589744 0.70876768 7.8513175  1.3988837 0.1618478632
-## alc1:smk1   0.7318192 0.18575194 2.8831965 -0.4463088 0.6553742276</code></pre>
-<p>or, alternatively, the following could be used.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="effect-modification-1.html#cb118-1" aria-hidden="true" tabindex="-1"></a>reg5 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
-<span id="cb118-2"><a href="effect-modification-1.html#cb118-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">&#39;log&#39;</span>), </span>
-<span id="cb118-3"><a href="effect-modification-1.html#cb118-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
-<span id="cb118-4"><a href="effect-modification-1.html#cb118-4" aria-hidden="true" tabindex="-1"></a>reg.res5 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg5, </span>
-<span id="cb118-5"><a href="effect-modification-1.html#cb118-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exp =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb118-6"><a href="effect-modification-1.html#cb118-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">robust =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb118-7"><a href="effect-modification-1.html#cb118-7" aria-hidden="true" tabindex="-1"></a>reg.res5<span class="sc">$</span>coeftable</span></code></pre></div>
-<pre><code>##             exp(Est.)       2.5%      97.5%     z val.           p
+## alc1:smk1   0.7318192 0.18575194 2.8831965 -0.4463088 0.6553742276
+```
+
+or, alternatively, the following could be used.
+
+
+```r
+reg5 = glm(oc~alc*smk, 
+           family = poisson(link = 'log'), 
+           data = OCdata)
+reg.res5 <- summ(reg5, 
+                 exp = TRUE, 
+                 robust = TRUE)
+reg.res5$coeftable
+```
+
+```
+##             exp(Est.)       2.5%      97.5%     z val.           p
 ## (Intercept) 0.1304348 0.04207716  0.4043342 -3.5286609 0.000417668
 ## alc1        2.5555554 0.63925951 10.2162942  1.3270950 0.184477266
 ## smk1        2.3589742 0.62595502  8.8900305  1.2678745 0.204842758
-## alc1:smk1   0.7318192 0.15458224  3.4645596 -0.3935815 0.693890056</code></pre>
-<!---
+## alc1:smk1   0.7318192 0.15458224  3.4645596 -0.3935815 0.693890056
+```
+
+
+
 #### Prevalence estimation
 
 
@@ -507,69 +558,62 @@ div.csl-indent {
 ```
 --->
 </div>
-<div id="converted-estimates-from-or" class="section level3 hasAnchor" number="3.2.4">
-<h3><span class="header-section-number">3.2.4</span> Converted estimates from OR<a href="effect-modification-1.html#converted-estimates-from-or" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="effect-modification-1.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(interactionR)</span>
-<span id="cb120-2"><a href="effect-modification-1.html#cb120-2" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
-<span id="cb120-3"><a href="effect-modification-1.html#cb120-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&#39;logit&#39;</span>), </span>
-<span id="cb120-4"><a href="effect-modification-1.html#cb120-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
-<span id="cb120-5"><a href="effect-modification-1.html#cb120-5" aria-hidden="true" tabindex="-1"></a>table_object <span class="ot">=</span> <span class="fu">interactionR</span>(reg1, </span>
-<span id="cb120-6"><a href="effect-modification-1.html#cb120-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">exposure_names =</span> <span class="fu">c</span>(<span class="st">&quot;alc1&quot;</span>, <span class="st">&quot;smk1&quot;</span>), </span>
-<span id="cb120-7"><a href="effect-modification-1.html#cb120-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ci.type =</span> <span class="st">&quot;mover&quot;</span>, </span>
-<span id="cb120-8"><a href="effect-modification-1.html#cb120-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ci.level =</span> <span class="fl">0.95</span>, </span>
-<span id="cb120-9"><a href="effect-modification-1.html#cb120-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">em=</span><span class="cn">TRUE</span>, </span>
-<span id="cb120-10"><a href="effect-modification-1.html#cb120-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">recode =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb120-11"><a href="effect-modification-1.html#cb120-11" aria-hidden="true" tabindex="-1"></a>table_object<span class="sc">$</span>dframe</span></code></pre></div>
+<div id="converted-estimates-from-or" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Converted estimates from OR<a href="effect-modification-1.html#converted-estimates-from-or" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="effect-modification-1.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(interactionR)</span>
+<span id="cb110-2"><a href="effect-modification-1.html#cb110-2" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
+<span id="cb110-3"><a href="effect-modification-1.html#cb110-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&#39;logit&#39;</span>), </span>
+<span id="cb110-4"><a href="effect-modification-1.html#cb110-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
+<span id="cb110-5"><a href="effect-modification-1.html#cb110-5" aria-hidden="true" tabindex="-1"></a>table_object <span class="ot">=</span> <span class="fu">interactionR</span>(reg1, </span>
+<span id="cb110-6"><a href="effect-modification-1.html#cb110-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">exposure_names =</span> <span class="fu">c</span>(<span class="st">&quot;smk1&quot;</span>, <span class="st">&quot;alc1&quot;</span>), </span>
+<span id="cb110-7"><a href="effect-modification-1.html#cb110-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ci.type =</span> <span class="st">&quot;mover&quot;</span>, </span>
+<span id="cb110-8"><a href="effect-modification-1.html#cb110-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ci.level =</span> <span class="fl">0.95</span>, </span>
+<span id="cb110-9"><a href="effect-modification-1.html#cb110-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">em=</span><span class="cn">TRUE</span>, </span>
+<span id="cb110-10"><a href="effect-modification-1.html#cb110-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">recode =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb110-11"><a href="effect-modification-1.html#cb110-11" aria-hidden="true" tabindex="-1"></a>table_object<span class="sc">$</span>dframe</span></code></pre></div>
 <pre><code>##                       Measures Estimates       CI.ll     CI.ul           p
 ## 1                         OR00 1.0000000          NA        NA          NA
-## 2                         OR01 2.9629630   0.6800459 12.909643 0.148045366
-## 3                         OR10 3.3333333   0.7006066 15.859273 0.130313246
+## 2                         OR01 3.3333333   0.7006066 15.859273 0.130313246
+## 3                         OR10 2.9629630   0.6800459 12.909643 0.148045366
 ## 4                         OR11 9.0361446   2.6413389 30.913075 0.000483904
-## 5 OR(smk1 on outcome [alc1==0] 2.9629630   0.6800459 12.909643 0.148045366
-## 6 OR(smk1 on outcome [alc1==1] 2.7108434   0.9969750  7.370969 0.050316637
+## 5 OR(alc1 on outcome [smk1==0] 3.3333333   0.7006066 15.859273 0.130313246
+## 6 OR(alc1 on outcome [smk1==1] 3.0496988   1.2948765  7.182664 0.010707090
 ## 7         Multiplicative scale 0.9149096   0.1543611  5.422737 0.921974441
 ## 8                         RERI 3.7398483 -11.4297248 21.872158          NA</code></pre>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="effect-modification-1.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interactionR_table</span>(table_object)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="effect-modification-1.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interactionR_table</span>(table_object)</span></code></pre></div>
 <pre><code>## Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
 ## a flextable object.
-## col_keys: `*`, `smk1 absent`, `smk1 present`, `Effect of smk1 within the strata of alc1` 
+## col_keys: `*`, `alc1 absent`, `alc1 present`, `Effect of alc1 within the strata of smk1` 
 ## header has 1 row(s) 
 ## body has 6 row(s) 
 ## original dataset sample: 
-##                      *       smk1 absent       smk1 present
-## 1                 &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
-## 2                 &lt;NA&gt;       OR [95% CI]        OR [95% CI]
-## 3          alc1 absent     1 [Reference] 2.96 [0.68, 12.91]
-## 4         alc1 present 3.33 [0.7, 15.86] 9.04 [2.64, 30.91]
-## 5 Multiplicative scale 0.91 [0.15, 5.42]               &lt;NA&gt;
-##   Effect of smk1 within the strata of alc1
+##                      *        alc1 absent       alc1 present
+## 1                 &lt;NA&gt;               &lt;NA&gt;               &lt;NA&gt;
+## 2                 &lt;NA&gt;        OR [95% CI]        OR [95% CI]
+## 3          smk1 absent      1 [Reference]  3.33 [0.7, 15.86]
+## 4         smk1 present 2.96 [0.68, 12.91] 9.04 [2.64, 30.91]
+## 5 Multiplicative scale  0.91 [0.15, 5.42]               &lt;NA&gt;
+##   Effect of alc1 within the strata of smk1
 ## 1                                     &lt;NA&gt;
 ## 2                              OR [95% CI]
-## 3                       2.96 [0.68, 12.91]
-## 4                           2.71 [1, 7.37]
+## 3                        3.33 [0.7, 15.86]
+## 4                        3.05 [1.29, 7.18]
 ## 5                                     &lt;NA&gt;</code></pre>
-<p>Compare with previously obtained results</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="effect-modification-1.html#cb124-1" aria-hidden="true" tabindex="-1"></a>saveres</span></code></pre></div>
-<pre><code>##              Variable Units OddsRatio        CI.95   p-value
-## 1 alc(0): smk(1 vs 0)            2.96 [0.68;12.91]   0.14805
-## 2 alc(1): smk(1 vs 0)            2.71  [1.00;7.37]   0.05070
-## 3 smk(0): alc(1 vs 0)            3.33 [0.70;15.86]   0.13031
-## 4 smk(1): alc(1 vs 0)            3.05  [1.29;7.18]   0.01073</code></pre>
-<p>Also calculate by hand</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="effect-modification-1.html#cb126-1" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">2</span>])</span>
-<span id="cb126-2"><a href="effect-modification-1.html#cb126-2" aria-hidden="true" tabindex="-1"></a>OR10 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta1)</span>
-<span id="cb126-3"><a href="effect-modification-1.html#cb126-3" aria-hidden="true" tabindex="-1"></a>OR10</span></code></pre></div>
+<p>Compare with previously obtained results, and also calculate by hand</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="effect-modification-1.html#cb114-1" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">2</span>])</span>
+<span id="cb114-2"><a href="effect-modification-1.html#cb114-2" aria-hidden="true" tabindex="-1"></a>OR10 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta1)</span>
+<span id="cb114-3"><a href="effect-modification-1.html#cb114-3" aria-hidden="true" tabindex="-1"></a>OR10</span></code></pre></div>
 <pre><code>## [1] 3.333333</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="effect-modification-1.html#cb128-1" aria-hidden="true" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">3</span>])</span>
-<span id="cb128-2"><a href="effect-modification-1.html#cb128-2" aria-hidden="true" tabindex="-1"></a>OR01 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta2)</span>
-<span id="cb128-3"><a href="effect-modification-1.html#cb128-3" aria-hidden="true" tabindex="-1"></a>OR01</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="effect-modification-1.html#cb116-1" aria-hidden="true" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">3</span>])</span>
+<span id="cb116-2"><a href="effect-modification-1.html#cb116-2" aria-hidden="true" tabindex="-1"></a>OR01 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta2)</span>
+<span id="cb116-3"><a href="effect-modification-1.html#cb116-3" aria-hidden="true" tabindex="-1"></a>OR01</span></code></pre></div>
 <pre><code>## [1] 2.962963</code></pre>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="effect-modification-1.html#cb130-1" aria-hidden="true" tabindex="-1"></a>beta3 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">4</span>])</span>
-<span id="cb130-2"><a href="effect-modification-1.html#cb130-2" aria-hidden="true" tabindex="-1"></a>OR11 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta1 <span class="sc">+</span> beta2 <span class="sc">+</span> beta3)</span>
-<span id="cb130-3"><a href="effect-modification-1.html#cb130-3" aria-hidden="true" tabindex="-1"></a>OR11</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="effect-modification-1.html#cb118-1" aria-hidden="true" tabindex="-1"></a>beta3 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">4</span>])</span>
+<span id="cb118-2"><a href="effect-modification-1.html#cb118-2" aria-hidden="true" tabindex="-1"></a>OR11 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta1 <span class="sc">+</span> beta2 <span class="sc">+</span> beta3)</span>
+<span id="cb118-3"><a href="effect-modification-1.html#cb118-3" aria-hidden="true" tabindex="-1"></a>OR11</span></code></pre></div>
 <pre><code>## [1] 9.036145</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="effect-modification-1.html#cb132-1" aria-hidden="true" tabindex="-1"></a>RERI <span class="ot">&lt;-</span> OR11 <span class="sc">-</span> OR10 <span class="sc">-</span> OR01 <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb132-2"><a href="effect-modification-1.html#cb132-2" aria-hidden="true" tabindex="-1"></a>RERI</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="effect-modification-1.html#cb120-1" aria-hidden="true" tabindex="-1"></a>RERI <span class="ot">&lt;-</span> OR11 <span class="sc">-</span> OR10 <span class="sc">-</span> OR01 <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb120-2"><a href="effect-modification-1.html#cb120-2" aria-hidden="true" tabindex="-1"></a>RERI</span></code></pre></div>
 <pre><code>## [1] 3.739848</code></pre>
 <!---
 
@@ -591,6 +635,10 @@ SI
 ## [1] 1.870482
 ```
 --->
+</div>
+<div id="rr-and-rd" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> RR and RD<a href="effect-modification-1.html#rr-and-rd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Estimation approach is same as interaction (adding an interaction term in the corresponding regression), we are just interested in estimates from each level of the effect modifier (hence less estimates are needed compared to those estimated in interaction assessment).</p>
 
 </div>
 </div>
