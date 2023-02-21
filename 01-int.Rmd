@@ -1,0 +1,509 @@
+```{r chunkSetup1, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(SASxport)
+require(DiagrammeR)
+require(DiagrammeRsvg)
+require(rsvg)
+library(magrittr)
+library(svglite)
+library(png)
+require(nhanesA)
+require(survey)
+require(Publish)
+require(knitr)
+require(jtools)
+require(interactions)
+require(interactionR)
+cache.ON = TRUE
+```
+
+# Interaction
+
+We will be using three measures of effect to explain the concept and necessary implementation ideas
+
+
+## Modelling to obtain OR
+
+ - odds ratio (OR),  Multiplicative scale
+    - Logit[Pr(Y=1)] = $\alpha_0$ + $\alpha_A$ A + $\alpha_B$ B + $\alpha_{AB}$ (A $\times$ B)
+    - Condition for presence of interaction ("departure from multiplicativity")
+        - OR10 $\times$ OR01 $\ne$ OR11
+        - $\exp(\alpha_A)$ $\times$ $\exp(\alpha_B)$ $\ne$ $\exp(\alpha_A+ \alpha_B + \alpha_{AB})$
+    - synergism / super-multiplicative
+        - OR11 > OR10 $\times$ OR01
+    - antagonism / sub-multiplicative
+        - OR11 < OR10 $\times$ OR01
+        
+*Note*: 
+The above assumes that both exposures are risk factors for the outcome (OR > 1), not protective factors. If protective, estimates of RERI and AP (defined later) will be invalid, although the estimate of SI is not affected by this condition.
+
+### Base 
+
+#### no alcohol, no smoking for OR(smk1 on outcome [alc1==0] and OR(alc1 on outcome [smk1==0]
+
+Model-based SE estimates from logistic regression model [@naimi2020estimating]:
+
+```{r}
+require(interactionR)
+data(OCdata)
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "0")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "0")
+fit.or.int11 <- glm(oc ~ alc + smk + alc:smk, 
+                    family = binomial(link = 'logit'), 
+                    data = Obs.Data)
+require(jtools)
+results.or.model11 <- summ(fit.or.int11, 
+                           model.info = FALSE, 
+                           model.fit = FALSE, 
+                           exp = TRUE, 
+                           confint = TRUE)
+results.or.model11
+```
+
+### Estimates of different ORs
+
+<!----
+###### Base 
+
+- $\alpha_0$ = `r round(as.numeric(fit.or.int11$coefficients['(Intercept)']),2)`
+- $\exp(\alpha_0)$ = `r round(exp(as.numeric(fit.or.int11$coefficients['(Intercept)'])),2)`
+--->
+
+
+##### Alcohol
+
+```{r}
+## OR00 = 1
+OR10 <- exp(sum(summary(fit.or.int11)$coef[c('alc1'),'Estimate']))
+OR10 ## OR_A=1
+```
+
+- $\alpha_A$ = `r round(as.numeric(fit.or.int11$coefficients['alc1']),2)`
+- OR_{A=1} = OR10 = $\exp(\alpha_A)$ = `r round(exp(as.numeric(fit.or.int11$coefficients['alc1'])),2)`
+
+##### Smoking
+
+```{r}
+OR01 <- exp(sum(summary(fit.or.int11)$coef[c('smk1'),'Estimate']))
+OR01 ## OR_B=1
+```
+
+- $\alpha_B$ = `r round(as.numeric(fit.or.int11$coefficients['smk1']),2)`
+- OR_{B=1} = OR01 = $\exp(\alpha_B)$ = `r round(exp(as.numeric(fit.or.int11$coefficients['smk1'])),2)`
+
+##### Both alcohol and smoking
+
+```{r}
+OR11 <- exp(sum(summary(fit.or.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])) 
+OR11 ##OR_A=1,B=1
+```
+
+- $\alpha_{AB}$ = `r round(as.numeric(fit.or.int11$coefficients['alc1:smk1']),2)`
+- OR_{A=1,B=1} = OR11 = `r round(exp(sum(summary(fit.or.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])),2)`
+
+##### Joint effect?
+
+Is OR11 $\ne$ OR10 * OR01
+
+```{r}
+OR10 * OR01
+```
+
+##### Additive scales
+
+- Relative excess risk due to interaction (RERI)
+  - ranges from 0 to $\infty$
+  - 0 means no interaction
+  - +ve means positive interaction 
+- Proportion of outcome among those with both exposures that is attributable to the interaction (AP)
+  - ranges from -1 to 1
+  - 0 means no interaction 
+- Synergy index (SI) 
+  - ratio of the combined effects and the individual effects
+  - ranges from 0 to $\infty$
+  - greater than 1 means positive interaction
+
+
+```{r}
+RERI <- OR11 - OR10 - OR01 + 1
+RERI
+AP <- RERI / OR11
+AP
+SI <- (OR11 - 1)/ (OR10 - 1 + OR01 - 1)
+SI
+```
+
+##### Recoding to obtain different combinations
+
+###### Base: alcohol drinker, no smoking for OR(smk1 on outcome [alc1==1]
+
+```{r}
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "0")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "1")
+fit.or.int01 <- glm(oc ~ alc + smk + alc:smk, 
+                    family = binomial(link = 'logit'), 
+                    data = Obs.Data)
+results.or.model01 <- summ(fit.or.int01, 
+                           model.info = FALSE, 
+                           model.fit = FALSE, 
+                           exp = TRUE, 
+                           confint = TRUE)
+results.or.model01
+```
+
+###### Base: Smoker, no alcohol for OR(alc1 on outcome [smk1==1]
+
+```{r}
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "1")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "0")
+fit.or.int10 <- glm(oc ~ alc + smk + alc:smk, 
+                    family = binomial(link = 'logit'), 
+                    data = Obs.Data)
+results.or.model10 <- summ(fit.or.int10, 
+                           model.info = FALSE, 
+                           model.fit = FALSE, 
+                           exp = TRUE,  
+                           confint = TRUE)
+results.or.model10
+
+OR10b <- exp(sum(summary(fit.or.int10)$coef[c('alc1'),'Estimate']))
+OR10b
+```
+
+#### Multiplicative scale
+
+```{r}
+Multiplicative.scale <- exp(sum(summary(fit.or.int11)$coef[c('alc1:smk1'),'Estimate'])) 
+Multiplicative.scale
+```
+
+- Multiplicative.scale = $\exp(\alpha_{AB})$ = `r round(exp(as.numeric(fit.or.int11$coefficients['alc1:smk1'])),2)`
+
+```{r}
+# estimates of alcohol after changing smoking ref levels
+OR10b / OR10
+```
+
+### Reporting guideline
+
+Ref: @knol2012recommendations, @alli2021interactionr
+
+```{r}
+int.object <- interactionR(fit.or.int11, 
+                            exposure_names = c("alc1", "smk1"), 
+                            ci.type = "mover", ci.level = 0.95, 
+                            em=FALSE, recode = FALSE)
+kable(int.object$dframe[,1:4], digits = 2)
+```
+
+### Other available functions
+
+Ref: @mathur2018r
+
+```{r}
+## Mathur MB & VanderWeele TJ (2018)
+source("Additive interactions function.R") 
+additive_interactions(fit.or.int11)
+```
+
+### Interaction definitions for OR
+
+| Groups and Conditions 	| Risk 	| Odds Ratio |
+|---	|---	|---	|
+| Baseline (exposed to none) 	| $R_{A = 0, B = 0} =  P[Y^{a=0, b=0} | L]$ 	| Reference | 
+| Exposed to $A$ only 	| $R_{A = 1, B = 0} =  P[Y^{a=1, b=0} | L]$ 	| $OR_{A = 1} = [R_{A = 1, B = 0} / (1-R_{A = 1, B = 0})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| Exposed to $B$ only 	| $R_{A = 0, B = 1} =  P[Y^{a=0, b=1} | L]$ 	| $OR_{B = 1} = [R_{A = 0, B = 1} / (1-R_{A = 0, B = 1})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| Exposed to both $A$ and $B$ 	| $R_{A = 1, B = 1} =  P[Y^{a=1, b=1} | L]$ 	| $OR_{A = 1, B = 1} = [R_{A = 1, B = 1} / (1-R_{A = 1, B = 1})] / [R_{A = 0, B = 0} / (1 - R_{A = 0, B = 0})]$ |
+| **Condition for interaction** 	 	|  | $OR_{A = 1, B = 1} \ne OR_{A = 1} \times OR_{B = 1}$	|
+| **Synergism** 	 	||   $OR_{A = 1, B = 1} > OR_{A = 1} \times OR_{B = 1}$	|
+| **Antagonism** 	 	||  $OR_{A = 1, B = 1} < OR_{A = 1} \times OR_{B = 1}$	|
+Table: \label{tab:def} Summary of interaction definition for OR.
+
+
+## Modelling to obtain RR
+
+ - risk ratio (RR), Multiplicative scale
+    - Very similar ideas as in OR
+    
+```{r}
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "0")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "0")
+fit.rr.int11 <- glm(oc ~ alc + smk + alc:smk, 
+                    family = poisson(link = 'log'), 
+                    data = Obs.Data)
+results.rr.model11 <- summ(fit.rr.int11, 
+                           model.info = FALSE, 
+                           model.fit = FALSE, 
+                           exp = TRUE, 
+                           robust = "HC1", 
+                           confint = TRUE)
+results.rr.model11
+```
+
+Ref: @naimi2020estimating
+
+Alternate formulation using log-binomial is possible (using model based SE, but confidence intervals somewhat differ from those reported from poisson(log)):
+
+```{r}
+fit.rr.int11lb <- glm(oc ~ alc + smk + alc:smk, 
+                      family = binomial(link = 'log'), 
+                      data = Obs.Data)
+results.rr.model11lb <- summ(fit.rr.int11lb, 
+                             model.info = FALSE, 
+                             model.fit = FALSE, 
+                             exp = TRUE, 
+                             confint = TRUE)
+results.rr.model11lb
+```
+
+### Estimates of different RRs
+
+#### Alcohol
+
+```{r}
+## RR00 = 1
+RR10 <- exp(sum(summary(fit.rr.int11)$coef[c('alc1'),'Estimate']))
+RR10 ## RR_A=1
+```
+
+- $\alpha_A$ = `r round(as.numeric(fit.rr.int11$coefficients['alc1']),2)`
+- RR_{A=1} = RR10 = $\exp(\alpha_A)$ = `r round(exp(as.numeric(fit.rr.int11$coefficients['alc1'])),2)`
+
+#### Smoking
+
+```{r}
+RR01 <- exp(sum(summary(fit.rr.int11)$coef[c('smk1'),'Estimate']))
+RR01 ## RR_B=1
+```
+
+- $\alpha_B$ = `r round(as.numeric(fit.rr.int11$coefficients['smk1']),2)`
+- RR_{B=1} = RR01 = $\exp(\alpha_B)$ = `r round(exp(as.numeric(fit.rr.int11$coefficients['smk1'])),2)`
+
+#### Both alcohol and smoking
+
+```{r}
+RR11 <- exp(sum(summary(fit.rr.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])) 
+RR11 ##RR_A=1,B=1
+```
+
+- $\alpha_{AB}$ = `r round(as.numeric(fit.rr.int11$coefficients['alc1:smk1']),2)`
+- RR_{A=1,B=1} = RR11 = `r round(exp(sum(summary(fit.rr.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])),2)`
+
+#### Joint effect?
+
+Is RR11 $\ne$ RR10 * RR01
+
+```{r}
+RR10 * RR01
+```
+
+#### Multiplicative scale
+
+```{r}
+Multiplicative.scale <- exp(sum(summary(fit.rr.int11)$coef[c('alc1:smk1'),'Estimate'])) 
+Multiplicative.scale
+```
+
+- Multiplicative.scale = $\exp(\alpha_{AB})$ = `r round(exp(as.numeric(fit.rr.int11$coefficients['alc1:smk1'])),2)`
+
+#### Additive scales
+
+```{r}
+RERI <- RR11 - RR10 - RR01 + 1
+RERI
+AP <- RERI / RR11
+AP
+SI <- (RR11 - 1)/ (RR10 - 1 + RR01 - 1)
+SI
+```
+
+
+#### Reporting guideline
+
+```{r}
+int.object <- interactionR(fit.rr.int11, 
+                            exposure_names = c("alc1", "smk1"), 
+                            ci.type = "mover", ci.level = 0.95, 
+                            em=FALSE, recode = FALSE)
+kable(int.object$dframe[,1:4], digits = 2)
+```
+
+Ref: @alli2021interactionr
+
+#### Interaction definitions for RR
+
+| Groups and Conditions 	| Risk 	| Risk Ratio | 
+|---	|---	|---	|---	| ---	|
+| Baseline (exposed to none) 	| $R_{A = 0, B = 0} =  P[Y^{a=0, b=0} | L]$ 	| Reference	|   
+| Exposed to $A$ only 	| $R_{A = 1, B = 0} =  P[Y^{a=1, b=0} | L]$ 	|  $RR_{A = 1} = R_{A = 1, B = 0} / R_{A = 0, B = 0}$	| 
+| Exposed to $B$ only 	| $R_{A = 0, B = 1} =  P[Y^{a=0, b=1} | L]$ 	|  $RR_{B = 1} = R_{A = 0, B = 1} / R_{A = 0, B = 0}$	| 
+| Exposed to both $A$ and $B$ 	| $R_{A = 1, B = 1} =  P[Y^{a=1, b=1} | L]$ 	|  $RR_{A = 1, B = 1} = R_{A = 1, B = 1} / R_{A = 0, B = 0}$	| 
+| **Condition for interaction** 	 	||  $RR_{A = 1, B = 1} \ne RR_{A = 1} \times RR_{B = 1}$ 	
+| **Synergism** 	 	||   $RR_{A = 1, B = 1} > RR_{A = 1} \times RR_{B = 1}$ 	|
+| **Antagonism** 	 	||   $RR_{A = 1, B = 1} < RR_{A = 1} \times RR_{B = 1}$ 	|
+Table: \label{tab:def} Summary of interaction definition for RR.
+
+
+## Modelling to obtain RD
+
+ - risk difference (RD), Additive scale
+    - risk(Y) = $\alpha_0$ + $\alpha_A$ A + $\alpha_B$ B + $\alpha_{AB}$ (A $\times$ B)
+        - RD10 $\times$ RD01 $\ne$ RD11
+        - $\alpha_A$ + $\alpha_B$ $\ne$ ($\alpha_A$ + $\alpha_B$ + $\alpha_{AB}$)
+    - synergism / super-additive
+        - RD11 > RD10 + RD01
+    - antagonism / sub-additive
+        - RD11 < RD10 + RD01    
+
+
+```{r}
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "0")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "0")
+fit.rd.int11 <- glm(oc ~ alc + smk + alc:smk, 
+                    family = gaussian(link = 'identity'), 
+                    data = Obs.Data)
+results.rd.model11 <- summ(fit.rd.int11, 
+                           model.info = FALSE, 
+                           model.fit = FALSE, 
+                           exp = FALSE, 
+                           robust = "HC1", 
+                           confint = TRUE)
+results.rd.model11
+```
+
+Ref: @naimi2020estimating
+
+
+Alternate formulation using binomial(identity) is possible (using model based SE, but confidence intervals slightly differ from those reported from gaussian(identity)):
+
+```{r}
+fit.rd.int11bi <- glm(oc ~ alc + smk + alc:smk, 
+                      family = binomial(link = 'identity'), 
+                      data = Obs.Data)
+results.rd.model11bi <- summ(fit.rd.int11bi, 
+                             model.info = FALSE, 
+                             model.fit = FALSE, 
+                             exp = FALSE, 
+                             confint = TRUE)
+results.rd.model11bi
+```
+
+### Base: Smoker, no alcohol for RD(alc1 on outcome [smk1==1]
+Alternate combination of smoking:
+
+```{r}
+Obs.Data <- OCdata
+Obs.Data$smk <- as.factor(Obs.Data$smk)
+Obs.Data$smk <- relevel(Obs.Data$smk, ref = "1")
+Obs.Data$alc <- as.factor(Obs.Data$alc)
+Obs.Data$alc <- relevel(Obs.Data$alc, ref = "0")
+fit.rd.int01 <- glm(oc ~ alc + smk + alc:smk, 
+                    family = gaussian(link = 'identity'), 
+                    data = Obs.Data)
+results.rd.model01 <- summ(fit.rd.int01, 
+                           model.info = FALSE, 
+                           model.fit = FALSE, 
+                           exp = FALSE, 
+                           robust = "HC1", 
+                           confint = TRUE)
+results.rd.model01
+```
+
+
+### Estimates of different RDs
+
+#### Alcohol
+
+```{r}
+## RD00 = 0
+RD10 <- sum(summary(fit.rd.int11)$coef[c('alc1'),'Estimate'])
+RD10 ## RD_A=1
+```
+
+- RD_{A=1} = RD10 = $\alpha_A$ = `r round(as.numeric(fit.rd.int11$coefficients['alc1']),2)`
+
+From alternate combination of smoking
+
+```{r}
+RD10b <- sum(summary(fit.rd.int01)$coef[c('alc1'),'Estimate'])
+RD10b ## RD_A=1
+```
+
+
+#### Smoking
+
+```{r}
+RD01 <- sum(summary(fit.rd.int11)$coef[c('smk1'),'Estimate'])
+RD01 ## RD_B=1
+```
+
+- RD_{B=1} = RD01 = $\alpha_B$ = `r round(as.numeric(fit.rd.int11$coefficients['smk1']),2)`
+
+
+#### Both alcohol and smoking
+
+```{r}
+RD11 <- sum(summary(fit.rd.int11)$coef[c('alc1','smk1','alc1:smk1'),'Estimate'])
+RD11 ##RD_A=1,B=1
+```
+
+- RD_{A=1,B=1} = RD11 = $\alpha_{AB}$ = `r round(as.numeric(fit.rd.int11$coefficients['alc1:smk1']),2)`
+
+#### Joint effect?
+
+Is RD11 $\ne$ RD10 + RD01
+
+```{r}
+RD10 + RD01
+```
+
+#### Additive scale (interaction contrast)
+
+```{r}
+IC <- RD10b - RD10
+IC
+```
+
+Current version of `interactionR` do not support RD, although the documentation says so: @alli2021interactionr
+
+### Interaction definitions for RD
+
+| Groups and Conditions 	| Risk 	| Risk Difference 	| 
+|---	|---	|---	|---	| ---	|
+| Baseline (exposed to none) 	| $R_{A = 0, B = 0} =  P[Y^{a=0, b=0} | L]$ 	| Reference	|  
+| Exposed to $A$ only 	| $R_{A = 1, B = 0} =  P[Y^{a=1, b=0} | L]$ 	| $RD_{A = 1} = R_{A = 1, B = 0} - R_{A = 0, B = 0}$	| 
+| Exposed to $B$ only 	| $R_{A = 0, B = 1} =  P[Y^{a=0, b=1} | L]$ 	| $RD_{B = 1} = R_{A = 0, B = 1} - R_{A = 0, B = 0}$	| 
+| Exposed to both $A$ and $B$ 	| $R_{A = 1, B = 1} =  P[Y^{a=1, b=1} | L]$ 	| $RD_{A = 1, B = 1} = R_{A = 1, B = 1} - R_{A = 0, B = 0}$	| 
+| **Condition for interaction** 	 	||  $RD_{A = 1, B = 1} \ne RD_{A = 1} + RD_{B = 1}$	| 
+| **Synergism** 	 	||  $RD_{A = 1, B = 1} > RD_{A = 1} + RD_{B = 1}$	| 
+| **Antagonism** 	 	||  $RD_{A = 1, B = 1} < RD_{A = 1} + RD_{B = 1}$	| 
+Table: \label{tab:def} Summary of interaction definition for RD.
+
+
+## Reporting guidelines
+
+- How to determine whether interaction should be reported in additive or multiplicative scale?
+  - Not via empirical assessment (analysis of data at hand)
+  - Study objectives should be clear
+  - data generating mechanism should be considered carefully
+- What if results differ?
+  - Very possible to have additive interaction present, but not at a multiplicative scale and vice versa
+  - When conclusions differ (interaction is present in additive, but absent in multiplicative or vice versa), both should be reported.
+  - When both are concluding the same (interaction is present in both scales or absent), questions related to magnitude remains
+
+

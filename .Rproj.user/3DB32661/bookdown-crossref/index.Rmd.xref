@@ -1,0 +1,11 @@
+h1:definitions Definitions
+h2:effect-modification Effect modification
+fig:dagem An illustration of possible effect modification by a dichotomous factor $B$ (tobacco smoking [**smk**]) while investigating the impact of a dichotomous factor $A$ (alcohol [**alc**]) on the dichotomous outcome $Y$ (oral cancer [**oc**]).\\label{fig:dagem}
+h2:interaction Interaction
+fig:dag An illustration of possible interaction by  while investigating the impact of two dichotomous factors: $A$ (alcohol [**alc**]) and $B$ (tobacco smoking [**smk**]) on the dichotomous outcome $Y$ (oral cancer [**oc**]).\\label{fig:dag}
+h2:example-data Example data
+h3:crude-risk-ratio Crude risk ratio
+h3:change-exposure-label-if-rr-1 Change exposure label if RR <1
+h3:get-detailed-estimates-from-2x2-table Get detailed estimates from 2x2 table
+h2:further-reading Further reading
+

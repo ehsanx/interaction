@@ -1,0 +1,38 @@
+h1:interaction Interaction
+h2:modelling-to-obtain-or Modelling to obtain OR
+h3:base Base
+h4:no-alcohol-no-smoking-for-orsmk1-on-outcome-alc10-and-oralc1-on-outcome-smk10 no alcohol, no smoking for OR(smk1 on outcome [alc1==0] and OR(alc1 on outcome [smk1==0]
+h3:estimates-of-different-ors Estimates of different ORs
+h5:alcohol Alcohol
+h5:smoking Smoking
+h5:both-alcohol-and-smoking Both alcohol and smoking
+h5:joint-effect Joint effect?
+h5:additive-scales Additive scales
+h5:recoding-to-obtain-different-combinations Recoding to obtain different combinations
+h6:base-alcohol-drinker-no-smoking-for-orsmk1-on-outcome-alc11 Base: alcohol drinker, no smoking for OR(smk1 on outcome [alc1==1]
+h6:base-smoker-no-alcohol-for-oralc1-on-outcome-smk11 Base: Smoker, no alcohol for OR(alc1 on outcome [smk1==1]
+h4:multiplicative-scale Multiplicative scale
+h3:reporting-guideline Reporting guideline
+h3:other-available-functions Other available functions
+h3:interaction-definitions-for-or Interaction definitions for OR
+h2:modelling-to-obtain-rr Modelling to obtain RR
+h3:estimates-of-different-rrs Estimates of different RRs
+h4:alcohol-1 Alcohol
+h4:smoking-1 Smoking
+h4:both-alcohol-and-smoking-1 Both alcohol and smoking
+h4:joint-effect-1 Joint effect?
+h4:multiplicative-scale-1 Multiplicative scale
+h4:additive-scales-1 Additive scales
+h4:reporting-guideline-1 Reporting guideline
+h4:interaction-definitions-for-rr Interaction definitions for RR
+h2:modelling-to-obtain-rd Modelling to obtain RD
+h3:base-smoker-no-alcohol-for-rdalc1-on-outcome-smk11 Base: Smoker, no alcohol for RD(alc1 on outcome [smk1==1]
+h3:estimates-of-different-rds Estimates of different RDs
+h4:alcohol-2 Alcohol
+h4:smoking-2 Smoking
+h4:both-alcohol-and-smoking-2 Both alcohol and smoking
+h4:joint-effect-2 Joint effect?
+h4:additive-scale-interaction-contrast Additive scale (interaction contrast)
+h3:interaction-definitions-for-rd Interaction definitions for RD
+h2:reporting-guidelines Reporting guidelines
+

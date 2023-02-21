@@ -1,0 +1,2 @@
+"0","M3 <- matrix(c(M[2,2],M[2,1],M[1,2],M[1,1]), nrow = 2, byrow = TRUE)"
+"0","require(epiR)"

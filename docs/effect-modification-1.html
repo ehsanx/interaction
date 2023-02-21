@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Effect modification | Assessing interation in epidemiological studies</title>
+  <meta name="description" content="Interactions and effect modifications." />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Effect modification | Assessing interation in epidemiological studies" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Interactions and effect modifications." />
+  <meta name="github-repo" content="ehsanx/interaction" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Effect modification | Assessing interation in epidemiological studies" />
+  
+  <meta name="twitter:description" content="Interactions and effect modifications." />
+  
+
+<meta name="author" content="Ehsan Karim, ehsan.karim@ubc.ca, https://ehsank.com/" />
+
+
+<meta name="date" content="2023-02-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="interaction-1.html"/>
+<link rel="next" href="reference.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Interation in epidemiology</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Definitions</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#effect-modification"><i class="fa fa-check"></i><b>1.1</b> Effect modification</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#interaction"><i class="fa fa-check"></i><b>1.2</b> Interaction</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#example-data"><i class="fa fa-check"></i><b>1.3</b> Example data</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#crude-risk-ratio"><i class="fa fa-check"></i><b>1.3.1</b> Crude risk ratio</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#change-exposure-label-if-rr-1"><i class="fa fa-check"></i><b>1.3.2</b> Change exposure label if RR &lt;1</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#get-detailed-estimates-from-2x2-table"><i class="fa fa-check"></i><b>1.3.3</b> Get detailed estimates from 2x2 table</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#further-reading"><i class="fa fa-check"></i><b>1.4</b> Further reading</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="interaction-1.html"><a href="interaction-1.html"><i class="fa fa-check"></i><b>2</b> Interaction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="interaction-1.html"><a href="interaction-1.html#modelling-to-obtain-or"><i class="fa fa-check"></i><b>2.1</b> Modelling to obtain OR</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="interaction-1.html"><a href="interaction-1.html#base"><i class="fa fa-check"></i><b>2.1.1</b> Base</a></li>
+<li class="chapter" data-level="2.1.2" data-path="interaction-1.html"><a href="interaction-1.html#estimates-of-different-ors"><i class="fa fa-check"></i><b>2.1.2</b> Estimates of different ORs</a></li>
+<li class="chapter" data-level="2.1.3" data-path="interaction-1.html"><a href="interaction-1.html#reporting-guideline"><i class="fa fa-check"></i><b>2.1.3</b> Reporting guideline</a></li>
+<li class="chapter" data-level="2.1.4" data-path="interaction-1.html"><a href="interaction-1.html#other-available-functions"><i class="fa fa-check"></i><b>2.1.4</b> Other available functions</a></li>
+<li class="chapter" data-level="2.1.5" data-path="interaction-1.html"><a href="interaction-1.html#interaction-definitions-for-or"><i class="fa fa-check"></i><b>2.1.5</b> Interaction definitions for OR</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="interaction-1.html"><a href="interaction-1.html#modelling-to-obtain-rr"><i class="fa fa-check"></i><b>2.2</b> Modelling to obtain RR</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="interaction-1.html"><a href="interaction-1.html#estimates-of-different-rrs"><i class="fa fa-check"></i><b>2.2.1</b> Estimates of different RRs</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="interaction-1.html"><a href="interaction-1.html#modelling-to-obtain-rd"><i class="fa fa-check"></i><b>2.3</b> Modelling to obtain RD</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="interaction-1.html"><a href="interaction-1.html#base-smoker-no-alcohol-for-rdalc1-on-outcome-smk11"><i class="fa fa-check"></i><b>2.3.1</b> Base: Smoker, no alcohol for RD(alc1 on outcome [smk1==1]</a></li>
+<li class="chapter" data-level="2.3.2" data-path="interaction-1.html"><a href="interaction-1.html#estimates-of-different-rds"><i class="fa fa-check"></i><b>2.3.2</b> Estimates of different RDs</a></li>
+<li class="chapter" data-level="2.3.3" data-path="interaction-1.html"><a href="interaction-1.html#interaction-definitions-for-rd"><i class="fa fa-check"></i><b>2.3.3</b> Interaction definitions for RD</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="interaction-1.html"><a href="interaction-1.html#reporting-guidelines"><i class="fa fa-check"></i><b>2.4</b> Reporting guidelines</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="effect-modification-1.html"><a href="effect-modification-1.html"><i class="fa fa-check"></i><b>3</b> Effect modification</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="effect-modification-1.html"><a href="effect-modification-1.html#estimates-from-tabulation"><i class="fa fa-check"></i><b>3.1</b> Estimates from Tabulation</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="effect-modification-1.html"><a href="effect-modification-1.html#first-strata-smoking-1"><i class="fa fa-check"></i><b>3.1.1</b> First strata: Smoking = 1</a></li>
+<li class="chapter" data-level="3.1.2" data-path="effect-modification-1.html"><a href="effect-modification-1.html#second-strata-smoking-0"><i class="fa fa-check"></i><b>3.1.2</b> second strata: : Smoking = 0</a></li>
+<li class="chapter" data-level="3.1.3" data-path="effect-modification-1.html"><a href="effect-modification-1.html#does-effect-modification-exist"><i class="fa fa-check"></i><b>3.1.3</b> Does effect modification exist?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="effect-modification-1.html"><a href="effect-modification-1.html#estimates-from-regression"><i class="fa fa-check"></i><b>3.2</b> Estimates from Regression</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="effect-modification-1.html"><a href="effect-modification-1.html#or-multiplicative-scale"><i class="fa fa-check"></i><b>3.2.1</b> OR: multiplicative scale</a></li>
+<li class="chapter" data-level="3.2.2" data-path="effect-modification-1.html"><a href="effect-modification-1.html#rd-additive-scale"><i class="fa fa-check"></i><b>3.2.2</b> RD: additive scale</a></li>
+<li class="chapter" data-level="3.2.3" data-path="effect-modification-1.html"><a href="effect-modification-1.html#rr-multiplicative-scale"><i class="fa fa-check"></i><b>3.2.3</b> RR: multiplicative scale</a></li>
+<li class="chapter" data-level="3.2.4" data-path="effect-modification-1.html"><a href="effect-modification-1.html#converted-estimates-from-or"><i class="fa fa-check"></i><b>3.2.4</b> Converted estimates from OR</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i>Reference</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Contact</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Assessing interation in epidemiological studies</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="effect-modification-1" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Effect modification<a href="effect-modification-1.html#effect-modification-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<ul>
+<li>Multiplicative odds ratio scale are very popular for examining effect modification.</li>
+<li>However, often multiplicative scale is not helpful for public health related interpretations, and is considered as inadequate for such assessment.</li>
+<li>Additive probability scale should be additionally used for such assessment.</li>
+</ul>
+<p>We will discuss the assessment of effect modification using one example data, and show how we can calculate the measures using R or calculate them by hand.</p>
+<div id="estimates-from-tabulation" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Estimates from Tabulation<a href="effect-modification-1.html#estimates-from-tabulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="effect-modification-1.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(interactionR)</span>
+<span id="cb80-2"><a href="effect-modification-1.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(OCdata)</span>
+<span id="cb80-3"><a href="effect-modification-1.html#cb80-3" aria-hidden="true" tabindex="-1"></a>outcome <span class="ot">=</span> <span class="st">&quot;oc&quot;</span></span>
+<span id="cb80-4"><a href="effect-modification-1.html#cb80-4" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">=</span> <span class="st">&quot;alc&quot;</span></span>
+<span id="cb80-5"><a href="effect-modification-1.html#cb80-5" aria-hidden="true" tabindex="-1"></a>dataset <span class="ot">=</span> OCdata</span></code></pre></div>
+<p>Now we will be working with stratified data (stratification by levels of effect modifier)</p>
+<div id="first-strata-smoking-1" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> First strata: Smoking = 1<a href="effect-modification-1.html#first-strata-smoking-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="effect-modification-1.html#cb81-1" aria-hidden="true" tabindex="-1"></a>str <span class="ot">=</span> <span class="st">&quot;smk&quot;</span></span>
+<span id="cb81-2"><a href="effect-modification-1.html#cb81-2" aria-hidden="true" tabindex="-1"></a>str.lab <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb81-3"><a href="effect-modification-1.html#cb81-3" aria-hidden="true" tabindex="-1"></a>dataset1 <span class="ot">&lt;-</span> dataset[dataset[[str]] <span class="sc">==</span> str.lab,]</span>
+<span id="cb81-4"><a href="effect-modification-1.html#cb81-4" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">table</span>(dataset1[[ex]], dataset1[[outcome]])</span>
+<span id="cb81-5"><a href="effect-modification-1.html#cb81-5" aria-hidden="true" tabindex="-1"></a>M3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(M[<span class="dv">2</span>,<span class="dv">2</span>],M[<span class="dv">2</span>,<span class="dv">1</span>],M[<span class="dv">1</span>,<span class="dv">2</span>],M[<span class="dv">1</span>,<span class="dv">1</span>]), </span>
+<span id="cb81-6"><a href="effect-modification-1.html#cb81-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">nrow =</span> <span class="dv">2</span>, </span>
+<span id="cb81-7"><a href="effect-modification-1.html#cb81-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-8"><a href="effect-modification-1.html#cb81-8" aria-hidden="true" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">epi.2by2</span>(<span class="at">dat =</span> M3, </span>
+<span id="cb81-9"><a href="effect-modification-1.html#cb81-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;cross.sectional&quot;</span>,</span>
+<span id="cb81-10"><a href="effect-modification-1.html#cb81-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">conf.level =</span> <span class="fl">0.95</span>, </span>
+<span id="cb81-11"><a href="effect-modification-1.html#cb81-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">units =</span> <span class="dv">1</span>, </span>
+<span id="cb81-12"><a href="effect-modification-1.html#cb81-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">interpret =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb81-13"><a href="effect-modification-1.html#cb81-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">outcome =</span> <span class="st">&quot;as.columns&quot;</span>)</span>
+<span id="cb81-14"><a href="effect-modification-1.html#cb81-14" aria-hidden="true" tabindex="-1"></a>res1</span></code></pre></div>
+<pre><code>##              Outcome +    Outcome -      Total               Prevalence *
+## Exposed +          225          166        391        0.58 (0.52 to 0.62)
+## Exposed -            8           18         26        0.31 (0.14 to 0.52)
+## Total              233          184        417        0.56 (0.51 to 0.61)
+## 
+## Point estimates and 95% CIs:
+## -------------------------------------------------------------------
+## Prevalence ratio                               1.87 (1.04, 3.35)
+## Odds ratio                                     3.05 (1.29, 7.18)
+## Attrib prevalence in the exposed *             0.27 (0.08, 0.45)
+## Attrib fraction in the exposed (%)            46.53 (4.23, 70.15)
+## Attrib prevalence in the population *          0.25 (0.07, 0.43)
+## Attrib fraction in the population (%)         44.93 (3.31, 68.64)
+## -------------------------------------------------------------------
+## Uncorrected chi2 test that OR = 1: chi2(1) = 7.089 Pr&gt;chi2 = 0.008
+## Fisher exact test that OR = 1: Pr&gt;chi2 = 0.013
+##  Wald confidence limits
+##  CI: confidence interval
+##  * Outcomes per population unit</code></pre>
+<p>Check the results yourself</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="effect-modification-1.html#cb83-1" aria-hidden="true" tabindex="-1"></a>p1.s1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">strsplit</span>(<span class="fu">as.character</span>(res1<span class="sc">$</span>tab<span class="sc">$</span><span class="st">`</span><span class="at">              Prevalence *</span><span class="st">`</span>), <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]][<span class="dv">1</span>])</span>
+<span id="cb83-2"><a href="effect-modification-1.html#cb83-2" aria-hidden="true" tabindex="-1"></a>p0.s1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">strsplit</span>(<span class="fu">as.character</span>(res1<span class="sc">$</span>tab<span class="sc">$</span><span class="st">`</span><span class="at">              Prevalence *</span><span class="st">`</span>), <span class="st">&quot; &quot;</span>)[[<span class="dv">2</span>]][<span class="dv">1</span>])</span>
+<span id="cb83-3"><a href="effect-modification-1.html#cb83-3" aria-hidden="true" tabindex="-1"></a>RR.s1 <span class="ot">&lt;-</span> p1.s1<span class="sc">/</span>p0.s1 </span>
+<span id="cb83-4"><a href="effect-modification-1.html#cb83-4" aria-hidden="true" tabindex="-1"></a>RR.s1</span></code></pre></div>
+<pre><code>## [1] 1.870968</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="effect-modification-1.html#cb85-1" aria-hidden="true" tabindex="-1"></a>RD.s1 <span class="ot">&lt;-</span> p1.s1 <span class="sc">-</span> p0.s1 </span>
+<span id="cb85-2"><a href="effect-modification-1.html#cb85-2" aria-hidden="true" tabindex="-1"></a>RD.s1</span></code></pre></div>
+<pre><code>## [1] 0.27</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="effect-modification-1.html#cb87-1" aria-hidden="true" tabindex="-1"></a>OR.s1a <span class="ot">&lt;-</span> (p1.s1<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p1.s1))</span>
+<span id="cb87-2"><a href="effect-modification-1.html#cb87-2" aria-hidden="true" tabindex="-1"></a>OR.s1b <span class="ot">&lt;-</span> (p0.s1<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p0.s1))</span>
+<span id="cb87-3"><a href="effect-modification-1.html#cb87-3" aria-hidden="true" tabindex="-1"></a>OR.s1 <span class="ot">&lt;-</span> OR.s1a<span class="sc">/</span>OR.s1b</span>
+<span id="cb87-4"><a href="effect-modification-1.html#cb87-4" aria-hidden="true" tabindex="-1"></a>OR.s1</span></code></pre></div>
+<pre><code>## [1] 3.073733</code></pre>
+</div>
+<div id="second-strata-smoking-0" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> second strata: : Smoking = 0<a href="effect-modification-1.html#second-strata-smoking-0" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="effect-modification-1.html#cb89-1" aria-hidden="true" tabindex="-1"></a>str.lab <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb89-2"><a href="effect-modification-1.html#cb89-2" aria-hidden="true" tabindex="-1"></a>dataset1 <span class="ot">&lt;-</span> dataset[dataset[[str]] <span class="sc">==</span> str.lab,]</span>
+<span id="cb89-3"><a href="effect-modification-1.html#cb89-3" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">table</span>(dataset1[[ex]], dataset1[[outcome]])</span>
+<span id="cb89-4"><a href="effect-modification-1.html#cb89-4" aria-hidden="true" tabindex="-1"></a>M3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(M[<span class="dv">2</span>,<span class="dv">2</span>],M[<span class="dv">2</span>,<span class="dv">1</span>],M[<span class="dv">1</span>,<span class="dv">2</span>],M[<span class="dv">1</span>,<span class="dv">1</span>]), </span>
+<span id="cb89-5"><a href="effect-modification-1.html#cb89-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb89-6"><a href="effect-modification-1.html#cb89-6" aria-hidden="true" tabindex="-1"></a>res0 <span class="ot">&lt;-</span> <span class="fu">epi.2by2</span>(<span class="at">dat =</span> M3, </span>
+<span id="cb89-7"><a href="effect-modification-1.html#cb89-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;cross.sectional&quot;</span>,</span>
+<span id="cb89-8"><a href="effect-modification-1.html#cb89-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">conf.level =</span> <span class="fl">0.95</span>, </span>
+<span id="cb89-9"><a href="effect-modification-1.html#cb89-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">units =</span> <span class="dv">1</span>, </span>
+<span id="cb89-10"><a href="effect-modification-1.html#cb89-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">interpret =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb89-11"><a href="effect-modification-1.html#cb89-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">outcome =</span> <span class="st">&quot;as.columns&quot;</span>)</span>
+<span id="cb89-12"><a href="effect-modification-1.html#cb89-12" aria-hidden="true" tabindex="-1"></a>res0</span></code></pre></div>
+<pre><code>##              Outcome +    Outcome -      Total               Prevalence *
+## Exposed +            6           12         18        0.33 (0.13 to 0.59)
+## Exposed -            3           20         23        0.13 (0.03 to 0.34)
+## Total                9           32         41        0.22 (0.11 to 0.38)
+## 
+## Point estimates and 95% CIs:
+## -------------------------------------------------------------------
+## Prevalence ratio                               2.56 (0.74, 8.84)
+## Odds ratio                                     3.33 (0.70, 15.86)
+## Attrib prevalence in the exposed *             0.20 (-0.05, 0.46)
+## Attrib fraction in the exposed (%)            60.87 (-35.37, 88.69)
+## Attrib prevalence in the population *          0.09 (-0.10, 0.28)
+## Attrib fraction in the population (%)         40.58 (-37.53, 74.33)
+## -------------------------------------------------------------------
+## Yates corrected chi2 test that OR = 1: chi2(1) = 1.387 Pr&gt;chi2 = 0.239
+## Fisher exact test that OR = 1: Pr&gt;chi2 = 0.147
+##  Wald confidence limits
+##  CI: confidence interval
+##  * Outcomes per population unit</code></pre>
+<p>Check the results yourself</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="effect-modification-1.html#cb91-1" aria-hidden="true" tabindex="-1"></a>p1.s0 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">strsplit</span>(<span class="fu">as.character</span>(res0<span class="sc">$</span>tab<span class="sc">$</span><span class="st">`</span><span class="at">              Prevalence *</span><span class="st">`</span>), <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]][<span class="dv">1</span>])</span>
+<span id="cb91-2"><a href="effect-modification-1.html#cb91-2" aria-hidden="true" tabindex="-1"></a>p0.s0 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">strsplit</span>(<span class="fu">as.character</span>(res0<span class="sc">$</span>tab<span class="sc">$</span><span class="st">`</span><span class="at">              Prevalence *</span><span class="st">`</span>), <span class="st">&quot; &quot;</span>)[[<span class="dv">2</span>]][<span class="dv">1</span>])</span>
+<span id="cb91-3"><a href="effect-modification-1.html#cb91-3" aria-hidden="true" tabindex="-1"></a>RR.s0 <span class="ot">&lt;-</span> p1.s0<span class="sc">/</span>p0.s0 </span>
+<span id="cb91-4"><a href="effect-modification-1.html#cb91-4" aria-hidden="true" tabindex="-1"></a>RR.s0</span></code></pre></div>
+<pre><code>## [1] 2.538462</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="effect-modification-1.html#cb93-1" aria-hidden="true" tabindex="-1"></a>RD.s0 <span class="ot">&lt;-</span> p1.s0 <span class="sc">-</span> p0.s0 </span>
+<span id="cb93-2"><a href="effect-modification-1.html#cb93-2" aria-hidden="true" tabindex="-1"></a>RD.s0</span></code></pre></div>
+<pre><code>## [1] 0.2</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="effect-modification-1.html#cb95-1" aria-hidden="true" tabindex="-1"></a>OR.s0a <span class="ot">&lt;-</span> (p1.s0<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p1.s0))</span>
+<span id="cb95-2"><a href="effect-modification-1.html#cb95-2" aria-hidden="true" tabindex="-1"></a>OR.s0b <span class="ot">&lt;-</span> (p0.s0<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p0.s0))</span>
+<span id="cb95-3"><a href="effect-modification-1.html#cb95-3" aria-hidden="true" tabindex="-1"></a>OR.s0 <span class="ot">&lt;-</span> OR.s0a<span class="sc">/</span>OR.s0b</span>
+<span id="cb95-4"><a href="effect-modification-1.html#cb95-4" aria-hidden="true" tabindex="-1"></a>OR.s0</span></code></pre></div>
+<pre><code>## [1] 3.296211</code></pre>
+</div>
+<div id="does-effect-modification-exist" class="section level3 hasAnchor" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Does effect modification exist?<a href="effect-modification-1.html#does-effect-modification-exist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>OR: 3.0737327 vs. 3.2962113</p>
+<p>Ratio of the OR in two groups (null value = 1)</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="effect-modification-1.html#cb97-1" aria-hidden="true" tabindex="-1"></a>OR.s1 <span class="sc">/</span> OR.s0</span></code></pre></div>
+<pre><code>## [1] 0.9325048</code></pre>
+<p>RD: 0.27 vs. 0.2</p>
+<p>Difference of the RD in two groups (null value = 0). This is also known as interaction contrast (IC)</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="effect-modification-1.html#cb99-1" aria-hidden="true" tabindex="-1"></a>RD.s1 <span class="sc">-</span> RD.s0</span></code></pre></div>
+<pre><code>## [1] 0.07</code></pre>
+<p>RR: 1.8709677 vs. 2.5384615</p>
+<p>Ratio of the RR in two groups (null value = 1)</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="effect-modification-1.html#cb101-1" aria-hidden="true" tabindex="-1"></a>RR.s1 <span class="sc">/</span> RR.s0</span></code></pre></div>
+<pre><code>## [1] 0.7370479</code></pre>
+<p>Are they equivalent in both stratified groups?</p>
+<div id="are-the-lines-parallel" class="section level4 hasAnchor" number="3.1.3.1">
+<h4><span class="header-section-number">3.1.3.1</span> Are the lines parallel?<a href="effect-modification-1.html#are-the-lines-parallel" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We can utilize the probability and log-odds calculated before to plot these lines:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="effect-modification-1.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">5.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">8.1</span>), <span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
+<span id="cb103-2"><a href="effect-modification-1.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(p1.s1,p0.s1), <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(p1.s1,p1.s0, p0.s1,p0.s0)), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab =</span> <span class="st">&quot;exposure&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Probability of outcome&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Probability scale&quot;</span>)</span>
+<span id="cb103-3"><a href="effect-modification-1.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(p1.s0,p0.s0), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb103-4"><a href="effect-modification-1.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">inset=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>,<span class="dv">0</span>), <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;strata 1&quot;</span>,<span class="st">&quot;strata 0&quot;</span>), <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">title=</span><span class="st">&quot;effect modifier&quot;</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="effect-modification-1.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">5.1</span>, <span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">8.1</span>), <span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
+<span id="cb104-2"><a href="effect-modification-1.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(<span class="fu">log</span>(OR.s1a), <span class="fu">log</span>(OR.s1b)), <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(<span class="fu">log</span>(OR.s1a), <span class="fu">log</span>(OR.s0a),<span class="fu">log</span>(OR.s1b),<span class="fu">log</span>(OR.s0b))), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab =</span> <span class="st">&quot;exposure&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;log-odds of outcome&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Log-odds scale&quot;</span>)</span>
+<span id="cb104-3"><a href="effect-modification-1.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">c</span>(<span class="fu">log</span>(OR.s0a),<span class="fu">log</span>(OR.s0b)), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb104-4"><a href="effect-modification-1.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">inset=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>,<span class="dv">0</span>), <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;strata 1&quot;</span>,<span class="st">&quot;strata 0&quot;</span>), <span class="at">pch=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">title=</span><span class="st">&quot;effect modifier&quot;</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="estimates-from-regression" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Estimates from Regression<a href="effect-modification-1.html#estimates-from-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Add interaction term in the regression</li>
+<li>check the coef of the interaction terms, and compare that number with the numbers calculated at the previous section (rations and differences): they should be equivalent if not equal</li>
+</ul>
+<p>Using regression could help accommodate the following</p>
+<ul>
+<li>covariates could be added</li>
+<li>exposure variable could be continuous covariate</li>
+</ul>
+<div id="or-multiplicative-scale" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> OR: multiplicative scale<a href="effect-modification-1.html#or-multiplicative-scale" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="effect-modification-1.html#cb105-1" aria-hidden="true" tabindex="-1"></a>OCdata<span class="sc">$</span>alc <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(OCdata<span class="sc">$</span>alc)</span>
+<span id="cb105-2"><a href="effect-modification-1.html#cb105-2" aria-hidden="true" tabindex="-1"></a>OCdata<span class="sc">$</span>smk <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(OCdata<span class="sc">$</span>smk)</span>
+<span id="cb105-3"><a href="effect-modification-1.html#cb105-3" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
+<span id="cb105-4"><a href="effect-modification-1.html#cb105-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&#39;logit&#39;</span>), </span>
+<span id="cb105-5"><a href="effect-modification-1.html#cb105-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
+<span id="cb105-6"><a href="effect-modification-1.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(jtools)</span>
+<span id="cb105-7"><a href="effect-modification-1.html#cb105-7" aria-hidden="true" tabindex="-1"></a>reg.res1 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg1, <span class="at">exp =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb105-8"><a href="effect-modification-1.html#cb105-8" aria-hidden="true" tabindex="-1"></a>reg.res1<span class="sc">$</span>coeftable</span></code></pre></div>
+<pre><code>##             exp(Est.)       2.5%      97.5%      z val.           p
+## (Intercept) 0.1500000 0.04457383  0.5047805 -3.06413033 0.002183038
+## alc1        3.3333333 0.70060657 15.8592734  1.51286779 0.130313246
+## smk1        2.9629630 0.68004588 12.9096430  1.44647020 0.148045366
+## alc1:smk1   0.9149096 0.15436110  5.4227369 -0.09794692 0.921974441</code></pre>
+<p>P-values are used to determine significance of the interaction term.</p>
+<p>Let us estimate the ORs by effect modifier</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="effect-modification-1.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Publish)</span>
+<span id="cb107-2"><a href="effect-modification-1.html#cb107-2" aria-hidden="true" tabindex="-1"></a>saveres <span class="ot">&lt;-</span> <span class="fu">publish</span>(reg1)</span></code></pre></div>
+<pre><code>##             Variable Units OddsRatio        CI.95   p-value 
+##  alc(0): smk(1 vs 0)            2.96 [0.68;12.91]   0.14805 
+##  alc(1): smk(1 vs 0)            2.71  [1.00;7.37]   0.05070 
+##  smk(0): alc(1 vs 0)            3.33 [0.70;15.86]   0.13031 
+##  smk(1): alc(1 vs 0)            3.05  [1.29;7.18]   0.01073</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="effect-modification-1.html#cb109-1" aria-hidden="true" tabindex="-1"></a>saveres</span></code></pre></div>
+<pre><code>##              Variable Units OddsRatio        CI.95   p-value
+## 1 alc(0): smk(1 vs 0)            2.96 [0.68;12.91]   0.14805
+## 2 alc(1): smk(1 vs 0)            2.71  [1.00;7.37]   0.05070
+## 3 smk(0): alc(1 vs 0)            3.33 [0.70;15.86]   0.13031
+## 4 smk(1): alc(1 vs 0)            3.05  [1.29;7.18]   0.01073</code></pre>
+<p>We can also plot this to check the overlap of CIs visually</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="effect-modification-1.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="st">&quot;OddsRatio&quot;</span>], </span>
+<span id="cb111-2"><a href="effect-modification-1.html#cb111-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;effect modifier&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;OR&quot;</span>, </span>
+<span id="cb111-3"><a href="effect-modification-1.html#cb111-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;OR by effect modifier&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
+<span id="cb111-4"><a href="effect-modification-1.html#cb111-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">range</span>(saveres<span class="sc">$</span>rawTable[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]))</span>
+<span id="cb111-5"><a href="effect-modification-1.html#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">3</span>,<span class="fu">c</span>(<span class="st">&quot;Lower&quot;</span>,<span class="st">&quot;Upper&quot;</span>)], </span>
+<span id="cb111-6"><a href="effect-modification-1.html#cb111-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb111-7"><a href="effect-modification-1.html#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), saveres<span class="sc">$</span>rawTable[<span class="dv">4</span>,<span class="fu">c</span>(<span class="st">&quot;Lower&quot;</span>,<span class="st">&quot;Upper&quot;</span>)], </span>
+<span id="cb111-8"><a href="effect-modification-1.html#cb111-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+</div>
+<div id="rd-additive-scale" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> RD: additive scale<a href="effect-modification-1.html#rd-additive-scale" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="effect-modification-1.html#cb112-1" aria-hidden="true" tabindex="-1"></a>reg2 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
+<span id="cb112-2"><a href="effect-modification-1.html#cb112-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&#39;identity&#39;</span>), </span>
+<span id="cb112-3"><a href="effect-modification-1.html#cb112-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
+<span id="cb112-4"><a href="effect-modification-1.html#cb112-4" aria-hidden="true" tabindex="-1"></a>reg.res2 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg2, </span>
+<span id="cb112-5"><a href="effect-modification-1.html#cb112-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exp =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb112-6"><a href="effect-modification-1.html#cb112-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">confint =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb112-7"><a href="effect-modification-1.html#cb112-7" aria-hidden="true" tabindex="-1"></a>reg.res2<span class="sc">$</span>coeftable</span></code></pre></div>
+<pre><code>##                   Est.         2.5%     97.5%    z val.          p
+## (Intercept) 0.13043478 -0.007201192 0.2680708 1.8574176 0.06325177
+## alc1        0.20289855 -0.054723418 0.4605205 1.5436333 0.12267719
+## smk1        0.17725753 -0.047279102 0.4017942 1.5472681 0.12179861
+## alc1:smk1   0.06485671 -0.251754034 0.3814675 0.4014924 0.68805761</code></pre>
+<p>Convergence is often an issue, and hence the following can be used instead. But for the following, robust standard error estimation is necessary. One disadvantage is that the estimated probabilities could be beyond 0 and 1.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="effect-modification-1.html#cb114-1" aria-hidden="true" tabindex="-1"></a>reg3 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
+<span id="cb114-2"><a href="effect-modification-1.html#cb114-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> gaussian, </span>
+<span id="cb114-3"><a href="effect-modification-1.html#cb114-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
+<span id="cb114-4"><a href="effect-modification-1.html#cb114-4" aria-hidden="true" tabindex="-1"></a>reg.res3 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg3, </span>
+<span id="cb114-5"><a href="effect-modification-1.html#cb114-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exp =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb114-6"><a href="effect-modification-1.html#cb114-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">robust =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb114-7"><a href="effect-modification-1.html#cb114-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">confint =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb114-8"><a href="effect-modification-1.html#cb114-8" aria-hidden="true" tabindex="-1"></a>reg.res3<span class="sc">$</span>coeftable</span></code></pre></div>
+<pre><code>##                   Est.        2.5%     97.5%   t val.         p
+## (Intercept) 0.13043478 -0.06858971 0.3294593 1.284503 0.1989662
+## alc1        0.20289855 -0.09747536 0.5032725 1.323929 0.1855265
+## smk1        0.17725753 -0.09596588 0.4504809 1.271554 0.2035316
+## alc1:smk1   0.06485671 -0.29234745 0.4220609 0.355866 0.7219409</code></pre>
+</div>
+<div id="rr-multiplicative-scale" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> RR: multiplicative scale<a href="effect-modification-1.html#rr-multiplicative-scale" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="effect-modification-1.html#cb116-1" aria-hidden="true" tabindex="-1"></a>reg4 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
+<span id="cb116-2"><a href="effect-modification-1.html#cb116-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&#39;log&#39;</span>), </span>
+<span id="cb116-3"><a href="effect-modification-1.html#cb116-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
+<span id="cb116-4"><a href="effect-modification-1.html#cb116-4" aria-hidden="true" tabindex="-1"></a>reg.res4 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg4, </span>
+<span id="cb116-5"><a href="effect-modification-1.html#cb116-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exp =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb116-6"><a href="effect-modification-1.html#cb116-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">robust =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb116-7"><a href="effect-modification-1.html#cb116-7" aria-hidden="true" tabindex="-1"></a>reg.res4<span class="sc">$</span>coeftable</span></code></pre></div>
+<pre><code>##             exp(Est.)       2.5%     97.5%     z val.            p
+## (Intercept) 0.1304348 0.04540698 0.3746832 -3.7833464 0.0001547338
+## alc1        2.5555556 0.73873564 8.8405972  1.4817478 0.1384074033
+## smk1        2.3589744 0.70876768 7.8513175  1.3988837 0.1618478632
+## alc1:smk1   0.7318192 0.18575194 2.8831965 -0.4463088 0.6553742276</code></pre>
+<p>or, alternatively, the following could be used.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="effect-modification-1.html#cb118-1" aria-hidden="true" tabindex="-1"></a>reg5 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
+<span id="cb118-2"><a href="effect-modification-1.html#cb118-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">&#39;log&#39;</span>), </span>
+<span id="cb118-3"><a href="effect-modification-1.html#cb118-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
+<span id="cb118-4"><a href="effect-modification-1.html#cb118-4" aria-hidden="true" tabindex="-1"></a>reg.res5 <span class="ot">&lt;-</span> <span class="fu">summ</span>(reg5, </span>
+<span id="cb118-5"><a href="effect-modification-1.html#cb118-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exp =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb118-6"><a href="effect-modification-1.html#cb118-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">robust =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb118-7"><a href="effect-modification-1.html#cb118-7" aria-hidden="true" tabindex="-1"></a>reg.res5<span class="sc">$</span>coeftable</span></code></pre></div>
+<pre><code>##             exp(Est.)       2.5%      97.5%     z val.           p
+## (Intercept) 0.1304348 0.04207716  0.4043342 -3.5286609 0.000417668
+## alc1        2.5555554 0.63925951 10.2162942  1.3270950 0.184477266
+## smk1        2.3589742 0.62595502  8.8900305  1.2678745 0.204842758
+## alc1:smk1   0.7318192 0.15458224  3.4645596 -0.3935815 0.693890056</code></pre>
+<!---
+#### Prevalence estimation
+
+
+```r
+## library(devtools)
+## install_github("Raydonal/prLogistic")
+## require(prLogistic)
+## OCdata$alc <- as.numeric(as.character(OCdata$alc))
+## OCdata$smk <- as.numeric(as.character(OCdata$smk))
+## OCdata$oc <- as.numeric(as.character(OCdata$oc))
+## reg1x = glm(oc~alc*smk, family = binomial(link = 'logit'), data = OCdata)
+##pr10 <- prLogisticBootCond(reg1, data = OCdata)
+##pr10
+## d1 <- subset(OCdata, smk == 1)
+## d0 <- subset(OCdata, smk == 0)
+## d1$alc <- as.numeric(as.character(d1$alc))
+## d0$alc <- as.numeric(as.character(d0$alc))
+## reg1s1 = glm(oc~alc, family = binomial(link = 'logit'), data = d1)
+## reg1s0 = glm(oc~alc, family = binomial(link = 'logit'), data = d0)
+##  prLogisticBootMarg(reg1s1, data = d1)
+##  prLogisticBootMarg(reg1s0, data = d0)
+```
+--->
+</div>
+<div id="converted-estimates-from-or" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Converted estimates from OR<a href="effect-modification-1.html#converted-estimates-from-or" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="effect-modification-1.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(interactionR)</span>
+<span id="cb120-2"><a href="effect-modification-1.html#cb120-2" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">=</span> <span class="fu">glm</span>(oc<span class="sc">~</span>alc<span class="sc">*</span>smk, </span>
+<span id="cb120-3"><a href="effect-modification-1.html#cb120-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&#39;logit&#39;</span>), </span>
+<span id="cb120-4"><a href="effect-modification-1.html#cb120-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> OCdata)</span>
+<span id="cb120-5"><a href="effect-modification-1.html#cb120-5" aria-hidden="true" tabindex="-1"></a>table_object <span class="ot">=</span> <span class="fu">interactionR</span>(reg1, </span>
+<span id="cb120-6"><a href="effect-modification-1.html#cb120-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">exposure_names =</span> <span class="fu">c</span>(<span class="st">&quot;alc1&quot;</span>, <span class="st">&quot;smk1&quot;</span>), </span>
+<span id="cb120-7"><a href="effect-modification-1.html#cb120-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ci.type =</span> <span class="st">&quot;mover&quot;</span>, </span>
+<span id="cb120-8"><a href="effect-modification-1.html#cb120-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ci.level =</span> <span class="fl">0.95</span>, </span>
+<span id="cb120-9"><a href="effect-modification-1.html#cb120-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">em=</span><span class="cn">TRUE</span>, </span>
+<span id="cb120-10"><a href="effect-modification-1.html#cb120-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">recode =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb120-11"><a href="effect-modification-1.html#cb120-11" aria-hidden="true" tabindex="-1"></a>table_object<span class="sc">$</span>dframe</span></code></pre></div>
+<pre><code>##                       Measures Estimates       CI.ll     CI.ul           p
+## 1                         OR00 1.0000000          NA        NA          NA
+## 2                         OR01 2.9629630   0.6800459 12.909643 0.148045366
+## 3                         OR10 3.3333333   0.7006066 15.859273 0.130313246
+## 4                         OR11 9.0361446   2.6413389 30.913075 0.000483904
+## 5 OR(smk1 on outcome [alc1==0] 2.9629630   0.6800459 12.909643 0.148045366
+## 6 OR(smk1 on outcome [alc1==1] 2.7108434   0.9969750  7.370969 0.050316637
+## 7         Multiplicative scale 0.9149096   0.1543611  5.422737 0.921974441
+## 8                         RERI 3.7398483 -11.4297248 21.872158          NA</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="effect-modification-1.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interactionR_table</span>(table_object)</span></code></pre></div>
+<pre><code>## Do you want to save a Microsoft Word copy of the em/interaction table to your working directory? (yes/No/cancel) 
+## a flextable object.
+## col_keys: `*`, `smk1 absent`, `smk1 present`, `Effect of smk1 within the strata of alc1` 
+## header has 1 row(s) 
+## body has 6 row(s) 
+## original dataset sample: 
+##                      *       smk1 absent       smk1 present
+## 1                 &lt;NA&gt;              &lt;NA&gt;               &lt;NA&gt;
+## 2                 &lt;NA&gt;       OR [95% CI]        OR [95% CI]
+## 3          alc1 absent     1 [Reference] 2.96 [0.68, 12.91]
+## 4         alc1 present 3.33 [0.7, 15.86] 9.04 [2.64, 30.91]
+## 5 Multiplicative scale 0.91 [0.15, 5.42]               &lt;NA&gt;
+##   Effect of smk1 within the strata of alc1
+## 1                                     &lt;NA&gt;
+## 2                              OR [95% CI]
+## 3                       2.96 [0.68, 12.91]
+## 4                           2.71 [1, 7.37]
+## 5                                     &lt;NA&gt;</code></pre>
+<p>Compare with previously obtained results</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="effect-modification-1.html#cb124-1" aria-hidden="true" tabindex="-1"></a>saveres</span></code></pre></div>
+<pre><code>##              Variable Units OddsRatio        CI.95   p-value
+## 1 alc(0): smk(1 vs 0)            2.96 [0.68;12.91]   0.14805
+## 2 alc(1): smk(1 vs 0)            2.71  [1.00;7.37]   0.05070
+## 3 smk(0): alc(1 vs 0)            3.33 [0.70;15.86]   0.13031
+## 4 smk(1): alc(1 vs 0)            3.05  [1.29;7.18]   0.01073</code></pre>
+<p>Also calculate by hand</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="effect-modification-1.html#cb126-1" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">2</span>])</span>
+<span id="cb126-2"><a href="effect-modification-1.html#cb126-2" aria-hidden="true" tabindex="-1"></a>OR10 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta1)</span>
+<span id="cb126-3"><a href="effect-modification-1.html#cb126-3" aria-hidden="true" tabindex="-1"></a>OR10</span></code></pre></div>
+<pre><code>## [1] 3.333333</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="effect-modification-1.html#cb128-1" aria-hidden="true" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">3</span>])</span>
+<span id="cb128-2"><a href="effect-modification-1.html#cb128-2" aria-hidden="true" tabindex="-1"></a>OR01 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta2)</span>
+<span id="cb128-3"><a href="effect-modification-1.html#cb128-3" aria-hidden="true" tabindex="-1"></a>OR01</span></code></pre></div>
+<pre><code>## [1] 2.962963</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="effect-modification-1.html#cb130-1" aria-hidden="true" tabindex="-1"></a>beta3 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">4</span>])</span>
+<span id="cb130-2"><a href="effect-modification-1.html#cb130-2" aria-hidden="true" tabindex="-1"></a>OR11 <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta1 <span class="sc">+</span> beta2 <span class="sc">+</span> beta3)</span>
+<span id="cb130-3"><a href="effect-modification-1.html#cb130-3" aria-hidden="true" tabindex="-1"></a>OR11</span></code></pre></div>
+<pre><code>## [1] 9.036145</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="effect-modification-1.html#cb132-1" aria-hidden="true" tabindex="-1"></a>RERI <span class="ot">&lt;-</span> OR11 <span class="sc">-</span> OR10 <span class="sc">-</span> OR01 <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb132-2"><a href="effect-modification-1.html#cb132-2" aria-hidden="true" tabindex="-1"></a>RERI</span></code></pre></div>
+<pre><code>## [1] 3.739848</code></pre>
+<!---
+
+```r
+AP <- RERI / OR11
+AP
+```
+
+```
+## [1] 0.4138765
+```
+
+```r
+SI <- (OR11 - 1)/ (OR10 - 1 + OR01 - 1)
+SI
+```
+
+```
+## [1] 1.870482
+```
+--->
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="interaction-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/interaction/edit/BRANCH/02-effmod.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

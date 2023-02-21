@@ -1,0 +1,281 @@
+{
+    "sources": [
+        {
+            "author": [
+                {
+                    "family": "Alli",
+                    "given": "Babatunde Y"
+                }
+            ],
+            "container-title": "Software Impacts",
+            "id": "alli2021interactionr",
+            "issued": {
+                "date-parts": [
+                    [
+                        2021
+                    ]
+                ]
+            },
+            "page": "100147",
+            "publisher": "Elsevier",
+            "title": "InteractionR: An r package for full reporting of effect modification and interaction",
+            "title-short": "InteractionR",
+            "type": "article-journal"
+        },
+        {
+            "author": [
+                {
+                    "family": "Bours",
+                    "given": "Martijn JL"
+                }
+            ],
+            "container-title": "Journal of clinical epidemiology",
+            "id": "bours2021tutorial",
+            "issued": {
+                "date-parts": [
+                    [
+                        2021
+                    ]
+                ]
+            },
+            "page": "113-124",
+            "publisher": "Elsevier",
+            "title": "Tutorial: A nontechnical explanation of the counterfactual definition of effect modification and interaction",
+            "title-short": "Tutorial",
+            "type": "article-journal",
+            "volume": "134"
+        },
+        {
+            "author": [
+                {
+                    "family": "Mathur",
+                    "given": "Maya B"
+                },
+                {
+                    "family": "VanderWeele",
+                    "given": "Tyler J"
+                }
+            ],
+            "container-title": "Epidemiology (Cambridge, Mass.)",
+            "id": "mathur2018r",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        2018
+                    ]
+                ]
+            },
+            "page": "e5",
+            "publisher": "NIH Public Access",
+            "title": "R function for additive interaction measures",
+            "type": "article-journal",
+            "volume": "29"
+        },
+        {
+            "author": [
+                {
+                    "family": "VanderWeele",
+                    "given": "Tyler J"
+                },
+                {
+                    "family": "Knol",
+                    "given": "Mirjam J"
+                }
+            ],
+            "container-title": "Epidemiologic methods",
+            "id": "vanderweele2014tutorial",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        2014
+                    ]
+                ]
+            },
+            "page": "33-72",
+            "publisher": "De Gruyter",
+            "title": "A tutorial on interaction",
+            "type": "article-journal",
+            "volume": "3"
+        },
+        {
+            "author": [
+                {
+                    "family": "VanderWeele",
+                    "given": "Tyler J"
+                },
+                {
+                    "family": "Knol",
+                    "given": "Mirjam J"
+                }
+            ],
+            "container-title": "Annals of internal medicine",
+            "id": "vanderweele2011interpretation",
+            "issue": "10",
+            "issued": {
+                "date-parts": [
+                    [
+                        2011
+                    ]
+                ]
+            },
+            "page": "680-683",
+            "publisher": "American College of Physicians",
+            "title": "Interpretation of subgroup analyses in randomized trials: Heterogeneity versus secondary interventions",
+            "title-short": "Interpretation of subgroup analyses in randomized trials",
+            "type": "article-journal",
+            "volume": "154"
+        },
+        {
+            "author": [
+                {
+                    "family": "Rothman",
+                    "given": "Kenneth J"
+                }
+            ],
+            "id": "rothman2012epidemiology",
+            "issued": {
+                "date-parts": [
+                    [
+                        2012
+                    ]
+                ]
+            },
+            "publisher": "Oxford university press",
+            "title": "Epidemiology: An introduction",
+            "title-short": "Epidemiology",
+            "type": "book"
+        },
+        {
+            "author": [
+                {
+                    "family": "VanderWeele",
+                    "given": "Tyler J"
+                }
+            ],
+            "container-title": "Epidemiology",
+            "id": "vanderweele2009distinction",
+            "issued": {
+                "date-parts": [
+                    [
+                        2009
+                    ]
+                ]
+            },
+            "page": "863-871",
+            "publisher": "JSTOR",
+            "title": "On the distinction between interaction and effect modification",
+            "type": "article-journal"
+        },
+        {
+            "author": [
+                {
+                    "family": "Knol",
+                    "given": "Mirjam J"
+                },
+                {
+                    "family": "VanderWeele",
+                    "given": "Tyler J"
+                }
+            ],
+            "container-title": "International Journal of Epidemiology",
+            "id": "knol2012recommendations",
+            "issue": "2",
+            "issued": {
+                "date-parts": [
+                    [
+                        2012
+                    ]
+                ]
+            },
+            "page": "514-520",
+            "publisher": "Oxford University Press",
+            "title": "Recommendations for presenting analyses of effect modification and interaction",
+            "type": "article-journal",
+            "volume": "41"
+        },
+        {
+            "author": [
+                {
+                    "family": "Rothman",
+                    "given": "Kenneth"
+                },
+                {
+                    "family": "Keller",
+                    "given": "Andrew"
+                }
+            ],
+            "container-title": "Journal of chronic diseases",
+            "id": "rothman1972effect",
+            "issue": "12",
+            "issued": {
+                "date-parts": [
+                    [
+                        1972
+                    ]
+                ]
+            },
+            "page": "711-716",
+            "publisher": "Elsevier",
+            "title": "The effect of joint exposure to alcohol and tobacco on risk of cancer of the mouth and pharynx",
+            "type": "article-journal",
+            "volume": "25"
+        },
+        {
+            "author": [
+                {
+                    "family": "Naimi",
+                    "given": "Ashley I"
+                },
+                {
+                    "family": "Whitcomb",
+                    "given": "Brian W"
+                }
+            ],
+            "container-title": "American journal of epidemiology",
+            "id": "naimi2020estimating",
+            "issue": "6",
+            "issued": {
+                "date-parts": [
+                    [
+                        2020
+                    ]
+                ]
+            },
+            "page": "508-510",
+            "publisher": "Oxford University Press",
+            "title": "Estimating risk ratios and risk differences using regression",
+            "type": "article-journal",
+            "volume": "189"
+        },
+        {
+            "author": [
+                {
+                    "family": "Whitcomb",
+                    "given": "Brian W"
+                },
+                {
+                    "family": "Naimi",
+                    "given": "Ashley I"
+                }
+            ],
+            "container-title": "American Journal of Epidemiology",
+            "id": "whitcomb2023interaction",
+            "issued": {
+                "date-parts": [
+                    [
+                        2023
+                    ]
+                ]
+            },
+            "page": "kwad034",
+            "publisher": "Oxford University Press",
+            "title": "Interaction in theory and in practice; evaluating combinations of exposures in epidemiologic research",
+            "type": "article-journal"
+        }
+    ],
+    "project_biblios": [
+        "ref.bib"
+    ]
+}

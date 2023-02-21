@@ -1,2 +1,1 @@
-# interaction
-interaction in epidemiology
+# Assessing interation in epidemiological studies
