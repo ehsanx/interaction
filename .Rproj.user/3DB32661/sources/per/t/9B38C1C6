@@ -1,26 +1,26 @@
 {
-    "id": "8E2A50FB",
-    "path": "~/GitHub/interaction/02-effmod.Rmd",
-    "project_path": "02-effmod.Rmd",
+    "id": "9B38C1C6",
+    "path": "~/GitHub/interaction/index.Rmd",
+    "project_path": "index.Rmd",
     "type": "r_markdown",
-    "hash": "3988310861",
+    "hash": "193755985",
     "contents": "",
     "dirty": false,
-    "created": 1676944435957.0,
+    "created": 1676953775784.0,
     "source_on_save": false,
     "relative_order": 3,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "339,266",
-        "scrollLine": "318"
+        "cursorPosition": "48,0",
+        "scrollLine": "40"
     },
     "folds": "",
-    "lastKnownWriteTime": 1676953076,
+    "lastKnownWriteTime": 1676950991,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1676953076192,
+    "last_content_update": 1676950991,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -125,6 +125,7 @@ Are they equivalent in both stratified groups?
 We can utilize the probability and log-odds calculated before to plot these lines:
 
 ```{r}
+png('images/pem.png')
 par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
 plot(c(1,0),c(p1.s1,p0.s1), 
      ylim = range(c(p1.s1,p1.s0, p0.s1,p0.s0)), 
@@ -144,9 +145,16 @@ legend("bottomright",
        pch=c(1,3), 
        title="effect modifier", 
        col = c("green", "red"))
+dev.off()
 ```
 
+```{r dagemp, echo=FALSE, out.width = '50%'}
+knitr::include_graphics("images/pem.png")
+```
+
+
 ```{r}
+png('images/loem.png')
 par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
 plot(c(1,0),c(log(OR.s1a), log(OR.s1b)), 
      ylim = range(c(log(OR.s1a), log(OR.s0a),log(OR.s1b),log(OR.s0b))), 
@@ -164,7 +172,13 @@ legend("bottomright", inset=c(-0.2,0),
        pch=c(1,3), 
        title="effect modifier", 
        col = c("green", "red"))
+dev.off()
 ```
+
+```{r dagemlo, echo=FALSE, out.width = '50%'}
+knitr::include_graphics("images/loem.png")
+```
+
 
 
 ## Estimates from Regression
@@ -203,6 +217,7 @@ saveres <- publish(reg1)
 We can also plot this to check the overlap of CIs visually
 
 ```{r}
+png('images/em.png')
 plot(c(0,1), saveres$rawTable[3:4,"OddsRatio"], 
      xlab="effect modifier", ylab="OR", 
      main="OR by effect modifier", xlim = c(0,1), 
@@ -211,7 +226,13 @@ lines(c(0,0), saveres$rawTable[3,c("Lower","Upper")],
       col="blue", lty=2)
 lines(c(1,1), saveres$rawTable[4,c("Lower","Upper")], 
       col="blue", lty=2)
+dev.off()
 ```
+
+```{r dagemx, echo=FALSE, out.width = '50%'}
+knitr::include_graphics("images/em.png")
+```
+
 
 <!---
 ### RD: additive scale
